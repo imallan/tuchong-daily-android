@@ -1,6 +1,5 @@
 package uk.co.imallan.tuchongdaily.api.data;
 
-import java.io.Serializable;
 import java.util.List;
 
 import uk.co.imallan.tuchongdaily.db.model.Post;
