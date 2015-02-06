@@ -7,6 +7,6 @@ import io.realm.RealmObject;
 /**
  * Created by allan on 15/1/30.
  */
-public abstract class BaseObject extends RealmObject implements Serializable {
+public abstract class BaseObject implements Serializable {
 
 }
