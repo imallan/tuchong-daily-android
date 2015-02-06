@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by allan on 15/2/6.
  */
-public class ObjectId extends BaseObject{
+public class ObjectId extends BaseObject {
 
 	@SerializedName("$oid")
 	private String id;

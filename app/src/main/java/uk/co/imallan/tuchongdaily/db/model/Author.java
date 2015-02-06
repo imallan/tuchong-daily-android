@@ -3,7 +3,7 @@ package uk.co.imallan.tuchongdaily.db.model;
 /**
  * Created by allan on 15/2/6.
  */
-public class Author extends BaseObject{
+public class Author extends BaseObject {
 
 	private String name;
 
