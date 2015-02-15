@@ -1,11 +1,15 @@
-package uk.co.imallan.tuchongdaily.db.model;
+package uk.co.imallan.tuchongdaily.model;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+import io.realm.RealmObject;
 
 /**
  * Created by allan on 15/2/6.
  */
-public class Image extends BaseObject {
+public class Image extends RealmObject implements Serializable {
 
 	private String id;
 

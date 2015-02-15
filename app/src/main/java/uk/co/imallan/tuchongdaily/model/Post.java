@@ -1,13 +1,16 @@
-package uk.co.imallan.tuchongdaily.db.model;
+package uk.co.imallan.tuchongdaily.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+
+import io.realm.RealmList;
+import io.realm.RealmObject;
 
 /**
  * Created by allan on 15/1/30.
  */
-public class Post extends BaseObject {
+public class Post extends RealmObject implements Serializable {
 
 	private String id;
 
@@ -22,7 +25,7 @@ public class Post extends BaseObject {
 
 	private String url;
 
-	ArrayList<String> tags;
+	private String tags;
 
 	private String excerpt;
 
@@ -32,7 +35,7 @@ public class Post extends BaseObject {
 
 	private String siteId;
 
-	ArrayList<Image> images;
+	private RealmList<Image> images;
 
 	private String type;
 
@@ -84,11 +87,11 @@ public class Post extends BaseObject {
 		this.url = url;
 	}
 
-	public ArrayList<String> getTags() {
+	public String getTags() {
 		return tags;
 	}
 
-	public void setTags(ArrayList<String> tags) {
+	public void setTags(String tags) {
 		this.tags = tags;
 	}
 
@@ -124,11 +127,11 @@ public class Post extends BaseObject {
 		this.siteId = siteId;
 	}
 
-	public ArrayList<Image> getImages() {
+	public RealmList<Image> getImages() {
 		return images;
 	}
 
-	public void setImages(ArrayList<Image> images) {
+	public void setImages(RealmList<Image> images) {
 		this.images = images;
 	}
 

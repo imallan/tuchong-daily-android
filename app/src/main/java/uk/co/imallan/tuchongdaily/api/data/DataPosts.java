@@ -1,21 +1,23 @@
 package uk.co.imallan.tuchongdaily.api.data;
 
-import java.util.List;
+import java.io.Serializable;
 
-import uk.co.imallan.tuchongdaily.db.model.Post;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import uk.co.imallan.tuchongdaily.model.Post;
 
 /**
  * Created by allan on 15/1/30.
  */
-public class DataPosts extends BaseData {
+public class DataPosts extends RealmObject implements Serializable {
 
-	private List<Post> posts;
+	private RealmList<Post> posts;
 
-	public List<Post> getPosts() {
+	public RealmList<Post> getPosts() {
 		return posts;
 	}
 
-	public void setPosts(List<Post> posts) {
+	public void setPosts(RealmList<Post> posts) {
 		this.posts = posts;
 	}
 }
