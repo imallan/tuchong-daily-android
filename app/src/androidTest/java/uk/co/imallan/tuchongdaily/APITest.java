@@ -12,9 +12,11 @@ import uk.co.imallan.tuchongdaily.api.data.DataPosts;
  */
 public class APITest extends AndroidTestCase {
 
+	private static final String LOG_TAG = APITest.class.getSimpleName();
 
 	public void testAPIGetPosts() throws Exception {
 		Response<DataPosts> posts = APIFactory.instance().getPosts();
-		Log.v("POSTS", String.valueOf(posts.getData().getPosts().size()));
+		Log.v(LOG_TAG, String.valueOf(posts.getData().getPosts().size()));
+		Log.v(LOG_TAG, posts.getData().getPosts().get(0).getTags());
 	}
 }
