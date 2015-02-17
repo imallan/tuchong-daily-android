@@ -15,7 +15,7 @@ public class APITest extends AndroidTestCase {
 	private static final String LOG_TAG = APITest.class.getSimpleName();
 
 	public void testAPIGetPosts() throws Exception {
-		Response<DataPosts> posts = APIFactory.instance().getPosts();
+		Response<DataPosts> posts = APIFactory.instance().getPosts(0, 0);
 		Log.v(LOG_TAG, String.valueOf(posts.getData().getPosts().size()));
 		Log.v(LOG_TAG, posts.getData().getPosts().get(0).getTags());
 	}

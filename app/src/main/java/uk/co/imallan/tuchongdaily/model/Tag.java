@@ -2,12 +2,10 @@ package uk.co.imallan.tuchongdaily.model;
 
 import java.io.Serializable;
 
-import io.realm.RealmObject;
-
 /**
  * Created by allan on 15/2/15.
  */
-public class Tag extends RealmObject implements Serializable {
+public class Tag implements Serializable {
 
 	private String text;
 

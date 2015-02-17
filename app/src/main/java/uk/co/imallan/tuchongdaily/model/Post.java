@@ -3,14 +3,13 @@ package uk.co.imallan.tuchongdaily.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
-import io.realm.RealmList;
-import io.realm.RealmObject;
 
 /**
  * Created by allan on 15/1/30.
  */
-public class Post extends RealmObject implements Serializable {
+public class Post implements Serializable {
 
 	private String id;
 
@@ -35,7 +34,7 @@ public class Post extends RealmObject implements Serializable {
 
 	private String siteId;
 
-	private RealmList<Image> images;
+	private ArrayList<Image> images;
 
 	private String type;
 
@@ -127,11 +126,11 @@ public class Post extends RealmObject implements Serializable {
 		this.siteId = siteId;
 	}
 
-	public RealmList<Image> getImages() {
+	public ArrayList<Image> getImages() {
 		return images;
 	}
 
-	public void setImages(RealmList<Image> images) {
+	public void setImages(ArrayList<Image> images) {
 		this.images = images;
 	}
 

@@ -4,12 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-import io.realm.RealmObject;
-
 /**
  * Created by allan on 15/2/6.
  */
-public class ObjectId extends RealmObject implements Serializable {
+public class ObjectId implements Serializable {
 
 	@SerializedName("$oid")
 	private String id;

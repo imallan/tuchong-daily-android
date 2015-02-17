@@ -1,19 +1,30 @@
 package uk.co.imallan.tuchongdaily.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import uk.co.imallan.tuchongdaily.R;
+import uk.co.imallan.tuchongdaily.api.data.DataPosts;
+import uk.co.imallan.tuchongdaily.model.Post;
+import uk.co.imallan.tuchongdaily.service.PostsService;
+import uk.co.imallan.tuchongdaily.service.ServiceReceiver;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AbstractActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		PostsService.requestPosts(this, serviceReceiver, 0, 12);
+	}
+
+	@Override
+	boolean prepareServiceReceiver() {
+		return true;
 	}
 
 
@@ -37,5 +48,17 @@ public class MainActivity extends ActionBarActivity {
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onReceiveResult(int resultCode, Bundle resultData, Intent originalIntent, Bundle originalBundle) {
+		switch (resultCode) {
+			case ServiceReceiver.STATUS_DATA:
+				DataPosts dataPosts = (DataPosts) resultData.getSerializable(ServiceReceiver.EXTRA_DATA);
+				for (Post post : dataPosts.getPosts()) {
+					Log.v("POST", post.getTitle());
+				}
+				break;
+		}
 	}
 }

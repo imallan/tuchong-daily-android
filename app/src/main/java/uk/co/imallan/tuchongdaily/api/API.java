@@ -14,11 +14,11 @@ public class API {
 		this.api = apiGet;
 	}
 
-	public Response<DataPosts> getPosts() {
+	public Response<DataPosts> getPosts(int skip, int limit) {
 		return api.getPosts(
 				Settings.APP_SECRET,
-				0,
-				0
+				skip,
+				limit
 		);
 	}
 }
