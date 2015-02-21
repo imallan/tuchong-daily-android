@@ -22,6 +22,11 @@
 		</activity>
 
 		<service android:name=".service.PostsService"/>
+
+		<provider
+			android:name=".provider.PostProvider"
+			android:authorities="uk.co.imallan.tuchongdaily.provider.PostProvider"
+			android:exported="false"/>
 	</application>
 
 </manifest>

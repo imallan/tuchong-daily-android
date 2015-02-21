@@ -10,23 +10,25 @@ public final class Table {
 	public Table() {
 	}
 
+	public static String UNDER_LINE = "_";
+
 	public static final class Post implements BaseColumns {
 
 		public static final String TABLE_NAME = "post";
 
-		public static final String COLUMN_ID = "id";
+		public static final String COLUMN_ID = TABLE_NAME + UNDER_LINE + "id";
 
-		public static final String COLUMN_LAST_TREND = "lasttrend";
+		public static final String COLUMN_LAST_TREND = TABLE_NAME + UNDER_LINE + "lasttrend";
 
-		public static final String COLUMN_URL = "url";
+		public static final String COLUMN_URL = TABLE_NAME + UNDER_LINE + "url";
 
-		public static final String COLUMN_TAGS = "tags";
+		public static final String COLUMN_TAGS = TABLE_NAME + UNDER_LINE + "tags";
 
-		public static final String COLUMN_EXCERPT = "excerpt";
+		public static final String COLUMN_EXCERPT = TABLE_NAME + UNDER_LINE + "excerpt";
 
-		public static final String COLUMN_AUTHOR_ID = "authorid";
+		public static final String COLUMN_AUTHOR_ID = TABLE_NAME + UNDER_LINE + "authorid";
 
-		public static final String COLUMN_TYPE = "type";
+		public static final String COLUMN_TYPE = TABLE_NAME + UNDER_LINE + "type";
 
 		public static final String SQL_CREATE_TABLE =
 				"CREATE TABLE " + TABLE_NAME + " (" +
@@ -48,17 +50,17 @@ public final class Table {
 
 		public static final String TABLE_NAME = "author";
 
-		public static final String COLUMN_ID = "id";
+		public static final String COLUMN_ID = TABLE_NAME + UNDER_LINE + "id";
 
-		public static final String COLUMN_NAME = "name";
+		public static final String COLUMN_NAME = TABLE_NAME + UNDER_LINE + "name";
 
-		public static final String COLUMN_DOMAIN = "domain";
+		public static final String COLUMN_DOMAIN = TABLE_NAME + UNDER_LINE + "domain";
 
-		public static final String COLUMN_URL = "url";
+		public static final String COLUMN_URL = TABLE_NAME + UNDER_LINE + "url";
 
-		public static final String COLUMN_TYPE = "type";
+		public static final String COLUMN_TYPE = TABLE_NAME + UNDER_LINE + "type";
 
-		public static final String COLUMN_ICON = "icon";
+		public static final String COLUMN_ICON = TABLE_NAME + UNDER_LINE + "icon";
 
 		public static final String SQL_CREATE_TABLE =
 				"CREATE TABLE " + TABLE_NAME + " (" +
@@ -80,35 +82,35 @@ public final class Table {
 
 		public static final String TABLE_NAME = "image";
 
-		public static final String COLUMN_ID = "id";
+		public static final String COLUMN_ID = TABLE_NAME + UNDER_LINE + "id";
 
-		public static final String COLUMN_TITLE = "title";
+		public static final String COLUMN_TITLE = TABLE_NAME + UNDER_LINE + "title";
 
-		public static final String COLUMN_DESCRIPTION = "description";
+		public static final String COLUMN_DESCRIPTION = TABLE_NAME + UNDER_LINE + "description";
 
-		public static final String COLUMN_URL_SMALL = "urlsmall";
+		public static final String COLUMN_URL_SMALL = TABLE_NAME + UNDER_LINE + "urlsmall";
 
-		public static final String COLUMN_URL_MEDIUM = "urlmedium";
+		public static final String COLUMN_URL_MEDIUM = TABLE_NAME + UNDER_LINE + "urlmedium";
 
-		public static final String COLUMN_URL_LARGE = "urllarge";
+		public static final String COLUMN_URL_LARGE = TABLE_NAME + UNDER_LINE + "urllarge";
 
-		public static final String COLUMN_URL_SQUARE = "urlsquare";
+		public static final String COLUMN_URL_SQUARE = TABLE_NAME + UNDER_LINE + "urlsquare";
 
-		public static final String COLUMN_URL_FULL = "url";
+		public static final String COLUMN_URL_FULL = TABLE_NAME + UNDER_LINE + "url";
 
-		public static final String COLUMN_CAMERA = "camera";
+		public static final String COLUMN_CAMERA = TABLE_NAME + UNDER_LINE + "camera";
 
-		public static final String COLUMN_TAKEN = "taken";
+		public static final String COLUMN_TAKEN = TABLE_NAME + UNDER_LINE + "taken";
 
-		public static final String COLUMN_LENS = "lens";
+		public static final String COLUMN_LENS = TABLE_NAME + UNDER_LINE + "lens";
 
-		public static final String COLUMN_EXPOSURE = "exposure";
+		public static final String COLUMN_EXPOSURE = TABLE_NAME + UNDER_LINE + "exposure";
 
-		public static final String COLUMN_EXCERPT = "excerpt";
+		public static final String COLUMN_EXCERPT = TABLE_NAME + UNDER_LINE + "excerpt";
 
-		public static final String COLUMN_USER_ID = "userid";
+		public static final String COLUMN_USER_ID = TABLE_NAME + UNDER_LINE + "userid";
 
-		public static final String COLUMN_POST_ID = "postid";
+		public static final String COLUMN_POST_ID = TABLE_NAME + UNDER_LINE + "postid";
 
 		public static final String SQL_CREATE_TABLE =
 				"CREATE TABLE " + TABLE_NAME + " (" +

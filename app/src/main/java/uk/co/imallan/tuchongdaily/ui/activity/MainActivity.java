@@ -1,7 +1,11 @@
 package uk.co.imallan.tuchongdaily.ui.activity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,11 +13,12 @@ import android.view.MenuItem;
 import uk.co.imallan.tuchongdaily.R;
 import uk.co.imallan.tuchongdaily.api.data.DataPosts;
 import uk.co.imallan.tuchongdaily.model.Post;
+import uk.co.imallan.tuchongdaily.provider.PostProvider;
 import uk.co.imallan.tuchongdaily.service.PostsService;
 import uk.co.imallan.tuchongdaily.service.ServiceReceiver;
 
 
-public class MainActivity extends AbstractActivity {
+public class MainActivity extends AbstractActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +64,25 @@ public class MainActivity extends AbstractActivity {
 					Log.v("POST", post.getTitle());
 				}
 				break;
+			case ServiceReceiver.STATUS_FINISHED:
+				getSupportLoaderManager().restartLoader(1, null, this);
 		}
 	}
+
+	@Override
+	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+		return new CursorLoader(this, PostProvider.uriPosts(), null, null, null, null);
+	}
+
+	@Override
+	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+	}
+
+	@Override
+	public void onLoaderReset(Loader<Cursor> loader) {
+
+	}
+
+
 }
