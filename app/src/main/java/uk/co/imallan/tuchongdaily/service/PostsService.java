@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 
+import java.util.ArrayList;
+
 import uk.co.imallan.tuchongdaily.api.APIFactory;
 import uk.co.imallan.tuchongdaily.api.data.DataPosts;
+import uk.co.imallan.tuchongdaily.model.Post;
 
 /**
  * Created by allan on 15/2/17.
@@ -43,6 +46,10 @@ public class PostsService extends AbstractService {
 	private void handleRequestPosts(Intent originalIntent, ResultReceiver receiver, int skip, int limit) {
 		DataPosts dataPosts = APIFactory.instance().getPosts(skip, limit).getData();
 		sendDataToReceiver(receiver, originalIntent, dataPosts);
+		ArrayList<Post> posts = dataPosts.getPosts();
+		for (Post post : posts) {
+			post.save(this);
+		}
 	}
 
 	public enum REQUESTS {

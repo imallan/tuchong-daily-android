@@ -1,13 +1,18 @@
 package uk.co.imallan.tuchongdaily.model;
 
+import android.content.ContentValues;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
+import uk.co.imallan.tuchongdaily.db.Table;
 
 /**
  * Created by allan on 15/2/6.
  */
-public class Image implements Serializable {
+public class Image extends AbstractModel implements Serializable {
 
 	private String id;
 
@@ -47,6 +52,10 @@ public class Image implements Serializable {
 	private String lens;
 
 	private String excerpt;
+
+	protected Image() {
+		super(Table.Image.TABLE_NAME);
+	}
 
 	public String getId() {
 		return id;
@@ -182,5 +191,28 @@ public class Image implements Serializable {
 
 	public void setExcerpt(String excerpt) {
 		this.excerpt = excerpt;
+	}
+
+	@Override
+	void saveToTable(ContentValues modelValues) {
+		modelValues.put(Table.Image.COLUMN_ID, id);
+		modelValues.put(Table.Image.COLUMN_TITLE, title);
+		modelValues.put(Table.Image.COLUMN_URL_SMALL, urlSmall);
+		modelValues.put(Table.Image.COLUMN_URL_MEDIUM, urlMedium);
+		modelValues.put(Table.Image.COLUMN_URL_LARGE, urlLarge);
+		modelValues.put(Table.Image.COLUMN_URL_SQUARE, urlSquare);
+		modelValues.put(Table.Image.COLUMN_URL_FULL, url);
+		modelValues.put(Table.Image.COLUMN_CAMERA, camera);
+		modelValues.put(Table.Image.COLUMN_TAKEN, taken);
+		modelValues.put(Table.Image.COLUMN_USER_ID, userId);
+		modelValues.put(Table.Image.COLUMN_POST_ID, postId);
+		modelValues.put(Table.Image.COLUMN_EXPOSURE, exposure);
+		modelValues.put(Table.Image.COLUMN_LENS, lens);
+		modelValues.put(Table.Image.COLUMN_EXCERPT, excerpt);
+	}
+
+	@Override
+	void saveNestedModels(ArrayList<AbstractModel> nestedModels) {
+
 	}
 }

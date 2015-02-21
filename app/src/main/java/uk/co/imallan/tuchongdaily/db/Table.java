@@ -94,13 +94,15 @@ public final class Table {
 
 		public static final String COLUMN_URL_SQUARE = "urlsquare";
 
-		public static final String COLUMN_URL_FULL = "urlsquare";
+		public static final String COLUMN_URL_FULL = "url";
 
 		public static final String COLUMN_CAMERA = "camera";
 
-		public static final String COLUMN_TAKEN = "camera";
+		public static final String COLUMN_TAKEN = "taken";
 
 		public static final String COLUMN_LENS = "lens";
+
+		public static final String COLUMN_EXPOSURE = "exposure";
 
 		public static final String COLUMN_EXCERPT = "excerpt";
 
@@ -112,19 +114,20 @@ public final class Table {
 				"CREATE TABLE " + TABLE_NAME + " (" +
 						_ID + " INTEGER PRIMARY KEY," +
 						COLUMN_ID + " TEXT UNIQUE ON CONFLICT REPLACE," +
-						COLUMN_TITLE + "TEXT," +
-						COLUMN_DESCRIPTION + "TEXT," +
-						COLUMN_URL_SMALL + "TEXT," +
-						COLUMN_URL_MEDIUM + "TEXT," +
-						COLUMN_URL_LARGE + "TEXT," +
-						COLUMN_URL_SQUARE + "TEXT," +
-						COLUMN_URL_FULL + "TEXT," +
-						COLUMN_CAMERA + "TEXT," +
-						COLUMN_TAKEN + "TEXT," +
-						COLUMN_LENS + "TEXT," +
-						COLUMN_EXCERPT + "TEXT," +
-						COLUMN_USER_ID + "TEXT NOT NULL," +
-						COLUMN_USER_ID + "TEXT NOT NULL" +
+						COLUMN_TITLE + " TEXT," +
+						COLUMN_DESCRIPTION + " TEXT," +
+						COLUMN_URL_SMALL + " TEXT," +
+						COLUMN_URL_MEDIUM + " TEXT," +
+						COLUMN_URL_LARGE + " TEXT," +
+						COLUMN_URL_SQUARE + " TEXT," +
+						COLUMN_URL_FULL + " TEXT," +
+						COLUMN_CAMERA + " TEXT," +
+						COLUMN_EXPOSURE + " TEXT," +
+						COLUMN_TAKEN + " TEXT," +
+						COLUMN_LENS + " TEXT," +
+						COLUMN_EXCERPT + " TEXT," +
+						COLUMN_USER_ID + " TEXT NOT NULL," +
+						COLUMN_POST_ID + " TEXT NOT NULL" +
 						")";
 
 		public static final String SQL_DELETE_TABLE =

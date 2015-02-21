@@ -1,15 +1,19 @@
 package uk.co.imallan.tuchongdaily.model;
 
+import android.content.ContentValues;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import uk.co.imallan.tuchongdaily.db.Table;
+
 
 /**
  * Created by allan on 15/1/30.
  */
-public class Post implements Serializable {
+public class Post extends AbstractModel implements Serializable {
 
 	private String id;
 
@@ -37,6 +41,10 @@ public class Post implements Serializable {
 	private ArrayList<Image> images;
 
 	private String type;
+
+	protected Post() {
+		super(Table.Post.TABLE_NAME);
+	}
 
 	public String getId() {
 		return id;
@@ -140,5 +148,25 @@ public class Post implements Serializable {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	@Override
+	void saveToTable(ContentValues contentValues) {
+		contentValues.put(Table.Post.COLUMN_ID, id);
+		contentValues.put(Table.Post.COLUMN_LAST_TREND, lastTrend);
+		contentValues.put(Table.Post.COLUMN_URL, url);
+		contentValues.put(Table.Post.COLUMN_TAGS, tags);
+		contentValues.put(Table.Post.COLUMN_EXCERPT, excerpt);
+		contentValues.put(Table.Post.COLUMN_AUTHOR_ID, authorId);
+		contentValues.put(Table.Post.COLUMN_TYPE, type);
+	}
+
+	@Override
+	void saveNestedModels(ArrayList<AbstractModel> nestedModels) {
+		nestedModels.add(author);
+		for (Image image : images) {
+			nestedModels.add(image);
+		}
+
 	}
 }
