@@ -27,6 +27,10 @@
 			android:name=".provider.PostProvider"
 			android:authorities="uk.co.imallan.tuchongdaily.provider.PostProvider"
 			android:exported="false"/>
+		<provider
+			android:name=".provider.PostProvider"
+			android:authorities="uk.co.imallan.tuchongdaily.provider.ImageProvider"
+			android:exported="false"/>
 	</application>
 
 </manifest>

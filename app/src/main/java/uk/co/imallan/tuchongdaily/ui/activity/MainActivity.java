@@ -71,7 +71,12 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		return new CursorLoader(this, PostProvider.uriPosts(), null, null, null, null);
+		switch (id) {
+			case 1:
+				return new CursorLoader(this, PostProvider.uriPosts(), null, null, null, null);
+			default:
+				return null;
+		}
 	}
 
 	@Override

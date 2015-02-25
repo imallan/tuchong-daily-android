@@ -9,7 +9,10 @@ import java.util.ArrayList;
 
 import uk.co.imallan.tuchongdaily.api.APIFactory;
 import uk.co.imallan.tuchongdaily.api.data.DataPosts;
+import uk.co.imallan.tuchongdaily.model.Image;
 import uk.co.imallan.tuchongdaily.model.Post;
+import uk.co.imallan.tuchongdaily.provider.ImageProvider;
+import uk.co.imallan.tuchongdaily.provider.PostProvider;
 
 /**
  * Created by allan on 15/2/17.
@@ -47,7 +50,18 @@ public class PostsService extends AbstractService {
 		DataPosts dataPosts = APIFactory.instance().getPosts(skip, limit).getData();
 		sendDataToReceiver(receiver, originalIntent, dataPosts);
 		ArrayList<Post> posts = dataPosts.getPosts();
+		if (skip == 0) {
+			getContentResolver().delete(PostProvider.uriPosts(), null, null);
+			getContentResolver().delete(ImageProvider.uriImages(), null, null);
+		}
 		for (Post post : posts) {
+			ArrayList<Image> images = post.getImages();
+			if (images != null) {
+				for (Image image : images) {
+					//delete related images
+					getContentResolver().delete(ImageProvider.uriImage(image.getPostId()), null, null);
+				}
+			}
 			post.save(this);
 		}
 	}
