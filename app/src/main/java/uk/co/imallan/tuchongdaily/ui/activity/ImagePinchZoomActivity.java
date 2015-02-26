@@ -57,11 +57,11 @@ public class ImagePinchZoomActivity extends AbstractActivity {
 		mImageView = (ImageView) findViewById(R.id.image_pinch_zoom);
 		mAttacher = new PhotoViewAttacher(mImageView);
 		String thumbnail = getIntent().getStringExtra(EXTRA_THUMBNAIL_URL);
-		if (!TextUtils.isEmpty(thumbnail)) {
-			requestThumbnailImage(thumbnail);
-		} else {
-			requestFullImage();
-		}
+//		if (!TextUtils.isEmpty(thumbnail)) {
+//			requestThumbnailImage(thumbnail);
+//		} else {
+		requestFullImage();
+//		}
 	}
 
 	private void requestThumbnailImage(String thumbnail) {
@@ -79,7 +79,17 @@ public class ImagePinchZoomActivity extends AbstractActivity {
 	}
 
 	private void requestFullImage() {
-		Picasso.with(this).load(getIntent().getStringExtra(EXTRA_IMAGE_URL)).noPlaceholder().noFade().into(getTarget(null));
+		Picasso.with(this).load(getIntent().getStringExtra(EXTRA_IMAGE_URL)).noPlaceholder().noFade().into(mImageView, new com.squareup.picasso.Callback() {
+			@Override
+			public void onSuccess() {
+				mAttacher.update();
+			}
+
+			@Override
+			public void onError() {
+				mAttacher.update();
+			}
+		});
 	}
 
 	private Target getTarget(final Callback callback) {
