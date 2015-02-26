@@ -49,7 +49,6 @@ public class PostImagesRecyclerViewAdapter extends RecyclerView.Adapter<PostImag
 			final String fullImageURL = mCursor.getString(mCursor.getColumnIndex(Table.Image.COLUMN_URL_LARGE));
 			Picasso.with(mContext)
 					.load(fullImageURL)
-					.fit().centerInside()
 					.into(holder.image);
 			holder.itemView.setOnClickListener(new View.OnClickListener() {
 				@Override
