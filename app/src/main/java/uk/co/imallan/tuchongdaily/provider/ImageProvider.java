@@ -32,13 +32,11 @@ public class ImageProvider extends AbstractProvider {
 	}
 
 	public static Uri uriImage(String id) {
-		return Uri.withAppendedPath(Uri.withAppendedPath(getContentUri(), URI_ID), id);
+		return Uri.withAppendedPath(getContentUri(), id);
 	}
 
 	public static Uri uriPostImages(String id) {
-		return Uri.withAppendedPath(
-				Uri.withAppendedPath(Uri.withAppendedPath(getContentUri(), POST_TABLE_NAME), URI_ID), id
-		);
+		return Uri.withAppendedPath(Uri.withAppendedPath(getContentUri(), POST_TABLE_NAME), id);
 	}
 
 	@Override

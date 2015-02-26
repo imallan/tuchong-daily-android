@@ -28,7 +28,7 @@ public class PostProvider extends AbstractProvider {
 	}
 
 	public static Uri uriPost(String id) {
-		return Uri.withAppendedPath(Uri.withAppendedPath(getContentUri(), URI_ID), id);
+		return Uri.withAppendedPath(getContentUri(), id);
 	}
 
 	@Override
