@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso;
 
 import uk.co.imallan.tuchongdaily.R;
 import uk.co.imallan.tuchongdaily.db.Table;
+import uk.co.imallan.tuchongdaily.ui.activity.ImagePinchZoomActivity;
 
 /**
  * Created by allan on 15/2/25.
@@ -21,6 +22,8 @@ public class PostImagesRecyclerViewAdapter extends RecyclerView.Adapter<PostImag
 	private Context mContext;
 
 	private Cursor mCursor;
+
+	private long mLastClick = 0;
 
 	public PostImagesRecyclerViewAdapter(Context context) {
 		this.mContext = context;
@@ -41,11 +44,24 @@ public class PostImagesRecyclerViewAdapter extends RecyclerView.Adapter<PostImag
 	}
 
 	@Override
-	public void onBindViewHolder(ViewHolder holder, int position) {
+	public void onBindViewHolder(final ViewHolder holder, int position) {
 		if (mCursor.moveToPosition(position)) {
+			final String fullImageURL = mCursor.getString(mCursor.getColumnIndex(Table.Image.COLUMN_URL_LARGE));
 			Picasso.with(mContext)
-					.load(mCursor.getString(mCursor.getColumnIndex(Table.Image.COLUMN_URL_FULL)))
+					.load(fullImageURL)
+					.fit().centerInside()
 					.into(holder.image);
+			holder.itemView.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					long current = System.currentTimeMillis();
+					if (current - mLastClick <= 1000) {
+						return;
+					}
+					mLastClick = current;
+					ImagePinchZoomActivity.startActivity(mContext, fullImageURL, holder.image, null);
+				}
+			});
 		}
 	}
 
