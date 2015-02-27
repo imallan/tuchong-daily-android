@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import uk.co.imallan.tuchongdaily.R;
@@ -50,9 +51,24 @@ public class ImageActivity extends AbstractActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_image);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			postponeEnterTransition();
+		}
 		mImageView = (ImageView) findViewById(R.id.image_view_image);
 		String imageURL = getIntent().getStringExtra(EXTRA_IMAGE_URL);
-		Picasso.with(this).load(imageURL).noPlaceholder().noFade().into(mImageView);
+		Picasso.with(this).load(imageURL).noPlaceholder().noFade().into(mImageView, new Callback() {
+			@Override
+			public void onSuccess() {
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+					startPostponedEnterTransition();
+				}
+			}
+
+			@Override
+			public void onError() {
+
+			}
+		});
 	}
 
 }

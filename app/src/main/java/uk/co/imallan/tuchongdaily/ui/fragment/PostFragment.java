@@ -20,6 +20,7 @@ import uk.co.imallan.tuchongdaily.R;
 import uk.co.imallan.tuchongdaily.db.Table;
 import uk.co.imallan.tuchongdaily.provider.ImageProvider;
 import uk.co.imallan.tuchongdaily.provider.PostProvider;
+import uk.co.imallan.tuchongdaily.ui.activity.ImageActivity;
 import uk.co.imallan.tuchongdaily.ui.adapter.PostImagesRecyclerViewAdapter;
 
 /**
@@ -43,6 +44,8 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 
 	private PostImagesRecyclerViewAdapter mAdapter;
 
+	private View mImageContainer;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,6 +64,7 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 		mTitle = (TextView) rootView.findViewById(R.id.text_post_title);
 		mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_post_images);
 		mImage = (ImageView) rootView.findViewById(R.id.image_post);
+		mImageContainer = rootView.findViewById(R.id.view_poster_container);
 		return rootView;
 	}
 
@@ -91,12 +95,18 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 		switch (loader.getId()) {
 			case LOADER_POST_IMAGES:
 				if (data.moveToPosition(0)) {
-					String url = data.getString(data.getColumnIndex(Table.Image.COLUMN_URL_FULL));
+					final String url = data.getString(data.getColumnIndex(Table.Image.COLUMN_URL_FULL));
 					Picasso.with(getActivity()).load(url).fit().centerCrop().into(mImage);
+					mImageContainer.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							ImageActivity.startActivity(getActivity(), url, mImage);
+						}
+					});
 				}
 				mAdapter.swapCursor(data);
 				if (data.getCount() <= 1) {
-					mRecyclerView.setVisibility(View.GONE);
+					mRecyclerView.setVisibility(View.INVISIBLE);
 				} else {
 					mRecyclerView.setVisibility(View.VISIBLE);
 				}

@@ -1,34 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			  xmlns:tools="http://schemas.android.com/tools"
-			  android:layout_width="match_parent"
-			  android:layout_height="match_parent"
-			  android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				xmlns:tools="http://schemas.android.com/tools"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical">
 
 	<RelativeLayout
+		android:id="@+id/view_poster_container"
 		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_weight="1">
+		android:layout_height="match_parent">
 
-		<ImageView
+	<ImageView
 			android:id="@+id/image_post"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:adjustViewBounds="true"
 			android:scaleType="centerCrop"/>
 
-		<TextView
-			android:id="@+id/text_post_title"
-			style="@style/TextAppearance.AppCompat.Medium.Inverse"
-			android:layout_width="match_parent"
-			android:maxLines="1"
-			android:ellipsize="end"
-			android:fontFamily="sans-serif-light"
-			android:layout_height="wrap_content"
-			android:layout_alignParentBottom="true"
-			android:padding="@dimen/space_large"
-			android:textColor="@android:color/white"
-			tools:text="Title"/>
 	</RelativeLayout>
 
 	<android.support.v7.widget.RecyclerView
@@ -38,5 +26,18 @@
 		android:layout_alignParentBottom="true"
 		android:elevation="@dimen/space_large"/>
 
+	<TextView
+		android:id="@+id/text_post_title"
+		style="@style/TextAppearance.AppCompat.Medium.Inverse"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_above="@id/recycler_post_images"
+		android:ellipsize="end"
+		android:fontFamily="sans-serif-light"
+		android:maxLines="1"
+		android:padding="@dimen/space_large"
+		android:textColor="@android:color/white"
+		tools:text="Title"/>
 
-</LinearLayout>
+
+</RelativeLayout>
