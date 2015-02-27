@@ -209,6 +209,8 @@ public class Image extends AbstractModel implements Serializable {
 		modelValues.put(Table.Image.COLUMN_EXPOSURE, exposure);
 		modelValues.put(Table.Image.COLUMN_LENS, lens);
 		modelValues.put(Table.Image.COLUMN_EXCERPT, excerpt);
+		modelValues.put(Table.Image.COLUMN_WIDTH, width);
+		modelValues.put(Table.Image.COLUMN_HEIGHT, height);
 	}
 
 	@Override

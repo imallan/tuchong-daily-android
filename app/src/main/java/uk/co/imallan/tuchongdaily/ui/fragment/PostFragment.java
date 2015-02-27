@@ -70,7 +70,6 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 		mAdapter = new PostImagesRecyclerViewAdapter(getActivity());
 		mRecyclerView.setAdapter(mAdapter);
-		mRecyclerView.setItemViewCacheSize(5);
 		getLoaderManager().initLoader(LOADER_POST_IMAGES, null, this);
 		getLoaderManager().initLoader(LOADER_POST, null, this);
 	}
@@ -96,6 +95,11 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 					Picasso.with(getActivity()).load(url).fit().centerCrop().into(mImage);
 				}
 				mAdapter.swapCursor(data);
+				if (data.getCount() <= 1) {
+					mRecyclerView.setVisibility(View.GONE);
+				} else {
+					mRecyclerView.setVisibility(View.VISIBLE);
+				}
 				break;
 			case LOADER_POST:
 				if (data.moveToPosition(0)) {
@@ -109,5 +113,17 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
 
+	}
+
+	public void onPageScrollFrom(float positionOffset, int positionOffsetPixels) {
+		mImage.setTranslationX(positionOffsetPixels / 2);
+	}
+
+	public void onPageScrollto(float positionOffset, int positionOffsetPixels) {
+		mImage.setTranslationX((positionOffsetPixels - mImage.getWidth()) / 2);
+	}
+
+	public void onPageSelected() {
+		mImage.setTranslationX(0);
 	}
 }

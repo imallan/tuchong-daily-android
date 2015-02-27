@@ -2,16 +2,16 @@
 
 	<!-- Base application theme. -->
 	<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-		<item name="android:windowBackground">@android:color/white</item>
+		<item name="android:windowBackground">@android:color/black</item>
 	</style>
 
 
 	<style name="AppTheme.Toolbar" parent="Theme.AppCompat.Light.NoActionBar">
-	<item name="android:windowBackground">@android:color/white</item>
+		<item name="android:windowBackground">@android:color/black</item>
 	</style>
 
 	<style name="AppTheme.Toolbar.TranslucentStatus" parent="AppTheme.Toolbar">
-	<item name="android:windowTranslucentStatus">true</item>
+		<item name="android:windowTranslucentStatus">true</item>
 	</style>
 
 </resources>

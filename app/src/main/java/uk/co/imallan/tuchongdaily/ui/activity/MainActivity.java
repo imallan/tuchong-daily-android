@@ -13,9 +13,11 @@ import uk.co.imallan.tuchongdaily.provider.PostProvider;
 import uk.co.imallan.tuchongdaily.service.PostsService;
 import uk.co.imallan.tuchongdaily.service.ServiceReceiver;
 import uk.co.imallan.tuchongdaily.ui.adapter.PostPagerAdapter;
+import uk.co.imallan.tuchongdaily.ui.fragment.PostFragment;
 
 
-public class MainActivity extends AbstractActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class MainActivity extends AbstractActivity
+		implements LoaderManager.LoaderCallbacks<Cursor>, ViewPager.OnPageChangeListener {
 
 	private static final int LOADER_POSTS = 1;
 
@@ -29,12 +31,14 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
 		setContentView(R.layout.activity_main);
 		initElements();
 		PostsService.requestPosts(this, serviceReceiver, 12, 0);
+		getSupportLoaderManager().initLoader(LOADER_POSTS, null, this);
 	}
 
 	private void initElements() {
 		mPager = (ViewPager) findViewById(R.id.pager_main);
 		mAdapter = new PostPagerAdapter(getSupportFragmentManager());
 		mPager.setAdapter(mAdapter);
+		mPager.setOnPageChangeListener(this);
 	}
 
 	@Override
@@ -46,10 +50,6 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
 	public void onReceiveResult(int resultCode, Bundle resultData, Intent originalIntent, Bundle originalBundle) {
 		switch (resultCode) {
 			case ServiceReceiver.STATUS_DATA:
-//				DataPosts dataPosts = (DataPosts) resultData.getSerializable(ServiceReceiver.EXTRA_DATA);
-//				for (Post post : dataPosts.getPosts()) {
-//					Log.v("POST", post.getTitle());
-//				}
 				break;
 			case ServiceReceiver.STATUS_FINISHED:
 				getSupportLoaderManager().restartLoader(LOADER_POSTS, null, this);
@@ -81,4 +81,33 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
 	}
 
 
+	private PostFragment getRegisteredFragment(int position) {
+		return (PostFragment) mAdapter.getRegisteredFragment(position);
+	}
+
+	@Override
+	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+		PostFragment fromFragment = getRegisteredFragment(position);
+		if (fromFragment != null) {
+			fromFragment.onPageScrollFrom(positionOffset, positionOffsetPixels);
+		}
+		PostFragment toFragment = getRegisteredFragment(position + 1);
+		if (toFragment != null) {
+			toFragment.onPageScrollto(positionOffset, positionOffsetPixels);
+		}
+	}
+
+	@Override
+	public void onPageSelected(int position) {
+		PostFragment fragment = getRegisteredFragment(position);
+		if (fragment != null) {
+			fragment.onPageSelected();
+		}
+
+	}
+
+	@Override
+	public void onPageScrollStateChanged(int state) {
+
+	}
 }

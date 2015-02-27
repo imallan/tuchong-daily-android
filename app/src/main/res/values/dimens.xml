@@ -12,6 +12,6 @@
 	<dimen name="space_extra_small">2dp</dimen>
 
 	<!--post-->
-	<dimen name="post_images_pager_height">200dp</dimen>
+	<dimen name="post_images_pager_height">120dp</dimen>
 
 </resources>

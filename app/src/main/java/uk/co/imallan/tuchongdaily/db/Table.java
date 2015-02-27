@@ -112,6 +112,10 @@ public final class Table {
 
 		public static final String COLUMN_POST_ID = TABLE_NAME + UNDER_LINE + "postid";
 
+		public static final String COLUMN_WIDTH = TABLE_NAME + UNDER_LINE + "width";
+
+		public static final String COLUMN_HEIGHT = TABLE_NAME + UNDER_LINE + "height";
+
 		public static final String SQL_CREATE_TABLE =
 				"CREATE TABLE " + TABLE_NAME + " (" +
 						_ID + " INTEGER PRIMARY KEY," +
@@ -129,7 +133,9 @@ public final class Table {
 						COLUMN_LENS + " TEXT," +
 						COLUMN_EXCERPT + " TEXT," +
 						COLUMN_USER_ID + " TEXT NOT NULL," +
-						COLUMN_POST_ID + " TEXT NOT NULL" +
+						COLUMN_POST_ID + " TEXT NOT NULL," +
+						COLUMN_WIDTH + " INTEGER," +
+						COLUMN_HEIGHT + " INTEGER" +
 						")";
 
 		public static final String SQL_DELETE_TABLE =
