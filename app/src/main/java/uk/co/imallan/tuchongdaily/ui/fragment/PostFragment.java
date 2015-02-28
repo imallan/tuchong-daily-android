@@ -115,7 +115,7 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 				break;
 			case LOADER_POST:
 				if (data.moveToPosition(0)) {
-					String title = data.getString(data.getColumnIndex(Table.Post.COLUMN_EXCERPT));
+					String title = data.getString(data.getColumnIndex(Table.Post.COLUMN_TITLE));
 					mTitle.setText(title);
 				}
 				break;

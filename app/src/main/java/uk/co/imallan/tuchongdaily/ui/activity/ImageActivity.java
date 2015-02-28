@@ -90,6 +90,12 @@ public class ImageActivity extends AbstractActivity {
 
 			}
 		});
+		mImageView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				onBackPressed();
+			}
+		});
 	}
 
 	private void initTransitions() {

@@ -4,5 +4,6 @@
 	<string name="app_name">Tuchong Daily</string>
 	<string name="action_settings">Settings</string>
 	<string name="share_hero">hero</string>
+	<string name="double_click_to_exit">Double click to exit</string>
 
 </resources>

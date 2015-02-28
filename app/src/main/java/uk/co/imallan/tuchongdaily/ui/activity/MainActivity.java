@@ -7,6 +7,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
+import android.widget.Toast;
 
 import uk.co.imallan.tuchongdaily.R;
 import uk.co.imallan.tuchongdaily.provider.PostProvider;
@@ -24,6 +25,8 @@ public class MainActivity extends AbstractActivity
 	private ViewPager mPager;
 
 	private PostPagerAdapter mAdapter;
+
+	private long mLastBackClicked = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +107,16 @@ public class MainActivity extends AbstractActivity
 			fragment.onPageSelected();
 		}
 
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (System.currentTimeMillis() - mLastBackClicked < 1000) {
+			super.onBackPressed();
+		} else {
+			Toast.makeText(this, R.string.double_click_to_exit, Toast.LENGTH_SHORT).show();
+			mLastBackClicked = System.currentTimeMillis();
+		}
 	}
 
 	@Override

@@ -30,6 +30,8 @@ public final class Table {
 
 		public static final String COLUMN_TYPE = TABLE_NAME + UNDER_LINE + "type";
 
+		public static final String COLUMN_TITLE = TABLE_NAME + UNDER_LINE + "title";
+
 		public static final String SQL_CREATE_TABLE =
 				"CREATE TABLE " + TABLE_NAME + " (" +
 						_ID + " INTEGER PRIMARY KEY," +
@@ -39,7 +41,8 @@ public final class Table {
 						COLUMN_TAGS + " TEXT," +
 						COLUMN_EXCERPT + " TEXT," +
 						COLUMN_AUTHOR_ID + " TEXT NOT NULL," +
-						COLUMN_TYPE + " TEXT " +
+						COLUMN_TYPE + " TEXT," +
+						COLUMN_TITLE + " TEXT " +
 						" )";
 
 		public static final String SQL_DELETE_TABLE =

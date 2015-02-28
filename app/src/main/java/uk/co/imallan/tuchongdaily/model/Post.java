@@ -159,6 +159,7 @@ public class Post extends AbstractModel implements Serializable {
 		contentValues.put(Table.Post.COLUMN_EXCERPT, excerpt);
 		contentValues.put(Table.Post.COLUMN_AUTHOR_ID, authorId);
 		contentValues.put(Table.Post.COLUMN_TYPE, type);
+		contentValues.put(Table.Post.COLUMN_TITLE, title);
 	}
 
 	@Override
