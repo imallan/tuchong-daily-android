@@ -79,6 +79,8 @@ public class PostImagesRecyclerViewAdapter extends RecyclerView.Adapter<PostImag
 			}
 			final String imageURL = mCursor.getString(mCursor.getColumnIndex(Table.Image.COLUMN_URL_MEDIUM));
 			final String largeImageURL = mCursor.getString(mCursor.getColumnIndex(Table.Image.COLUMN_URL_LARGE));
+			final String cameraInfo = mCursor.getString(mCursor.getColumnIndex(Table.Image.COLUMN_CAMERA));
+			final String lensInfo = mCursor.getString(mCursor.getColumnIndex(Table.Image.COLUMN_LENS));
 			Picasso.with(mContext)
 					.load(imageURL)
 					.into(holder.image);
@@ -90,7 +92,7 @@ public class PostImagesRecyclerViewAdapter extends RecyclerView.Adapter<PostImag
 						return;
 					}
 					mLastClick = current;
-					ImageActivity.startActivity(mContext, largeImageURL, holder.image);
+					ImageActivity.startActivity(mContext, largeImageURL, cameraInfo, lensInfo, holder.image);
 				}
 			});
 		}

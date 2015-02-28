@@ -97,10 +97,12 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 				if (data.moveToPosition(0)) {
 					final String url = data.getString(data.getColumnIndex(Table.Image.COLUMN_URL_FULL));
 					Picasso.with(getActivity()).load(url).fit().centerCrop().into(mImage);
+					final String cameraInfo = data.getString(data.getColumnIndex(Table.Image.COLUMN_CAMERA));
+					final String lensInfo = data.getString(data.getColumnIndex(Table.Image.COLUMN_LENS));
 					mImageContainer.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							ImageActivity.startActivity(getActivity(), url, mImage);
+							ImageActivity.startActivity(getActivity(), url, cameraInfo, lensInfo, mImage);
 						}
 					});
 				}
