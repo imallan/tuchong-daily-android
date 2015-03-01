@@ -22,6 +22,7 @@ import uk.co.imallan.tuchongdaily.provider.ImageProvider;
 import uk.co.imallan.tuchongdaily.provider.PostProvider;
 import uk.co.imallan.tuchongdaily.ui.activity.ImageActivity;
 import uk.co.imallan.tuchongdaily.ui.adapter.PostImagesRecyclerViewAdapter;
+import uk.co.imallan.tuchongdaily.utils.ImageUtils;
 
 /**
  * Created by allan on 15/2/25.
@@ -96,7 +97,11 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 			case LOADER_POST_IMAGES:
 				if (data.moveToPosition(0)) {
 					final String url = data.getString(data.getColumnIndex(Table.Image.COLUMN_URL_FULL));
-					Picasso.with(getActivity()).load(url).fit().centerCrop().into(mImage);
+					Picasso.with(getActivity()).load(url)
+							.transform(new ImageUtils.LimitImageSizeTransformation(
+											ImageUtils.LimitImageSizeTransformation.QUALITY.QUALITY_1080P)
+							).fit().centerCrop()
+							.into(mImage);
 					final String cameraInfo = data.getString(data.getColumnIndex(Table.Image.COLUMN_CAMERA));
 					final String lensInfo = data.getString(data.getColumnIndex(Table.Image.COLUMN_LENS));
 					mImageContainer.setOnClickListener(new View.OnClickListener() {

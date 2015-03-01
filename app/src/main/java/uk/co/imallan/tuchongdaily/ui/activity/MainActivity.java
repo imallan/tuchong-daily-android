@@ -56,6 +56,7 @@ public class MainActivity extends AbstractActivity
 				break;
 			case ServiceReceiver.STATUS_FINISHED:
 				getSupportLoaderManager().restartLoader(LOADER_POSTS, null, this);
+				break;
 		}
 	}
 

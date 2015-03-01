@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso;
 import uk.co.imallan.tuchongdaily.R;
 import uk.co.imallan.tuchongdaily.db.Table;
 import uk.co.imallan.tuchongdaily.ui.activity.ImageActivity;
+import uk.co.imallan.tuchongdaily.utils.ImageUtils;
 
 /**
  * Created by allan on 15/2/25.
@@ -41,7 +42,15 @@ public class PostImagesRecyclerViewAdapter extends RecyclerView.Adapter<PostImag
 	public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		LayoutInflater inflater = LayoutInflater.from(mContext);
 		View itemView = inflater.inflate(R.layout.view_item_post_image, parent, false);
-		return new ViewHolder(itemView);
+		final ViewHolder viewHolder = new ViewHolder(itemView);
+//		viewHolder.image.post(new Runnable() {
+//			@Override
+//			public void run() {
+//				viewHolder.image.getLayoutParams().width = viewHolder.image.getHeight();
+//				viewHolder.image.requestLayout();
+//			}
+//		});
+		return viewHolder;
 	}
 
 	@Override
@@ -77,12 +86,13 @@ public class PostImagesRecyclerViewAdapter extends RecyclerView.Adapter<PostImag
 					}
 				});
 			}
-			final String imageURL = mCursor.getString(mCursor.getColumnIndex(Table.Image.COLUMN_URL_MEDIUM));
+//			final String imageURL = mCursor.getString(mCursor.getColumnIndex(Table.Image.COLUMN_URL_MEDIUM));
 			final String largeImageURL = mCursor.getString(mCursor.getColumnIndex(Table.Image.COLUMN_URL_LARGE));
 			final String cameraInfo = mCursor.getString(mCursor.getColumnIndex(Table.Image.COLUMN_CAMERA));
 			final String lensInfo = mCursor.getString(mCursor.getColumnIndex(Table.Image.COLUMN_LENS));
 			Picasso.with(mContext)
-					.load(imageURL)
+					.load(largeImageURL)
+					.transform(new ImageUtils.LimitImageSizeTransformation(ImageUtils.LimitImageSizeTransformation.QUALITY.QUALITY_THUMBNAILS_TINY))
 					.into(holder.image);
 			holder.itemView.setOnClickListener(new View.OnClickListener() {
 				@Override
