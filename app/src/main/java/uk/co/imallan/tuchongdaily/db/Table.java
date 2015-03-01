@@ -122,7 +122,7 @@ public final class Table {
 		public static final String SQL_CREATE_TABLE =
 				"CREATE TABLE " + TABLE_NAME + " (" +
 						_ID + " INTEGER PRIMARY KEY," +
-						COLUMN_ID + " TEXT UNIQUE ON CONFLICT REPLACE," +
+						COLUMN_ID + " TEXT NOT NULL," +
 						COLUMN_TITLE + " TEXT," +
 						COLUMN_DESCRIPTION + " TEXT," +
 						COLUMN_URL_SMALL + " TEXT," +

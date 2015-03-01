@@ -55,7 +55,7 @@ public class PostImagesRecyclerViewAdapter extends RecyclerView.Adapter<PostImag
 
 	@Override
 	public void onBindViewHolder(final ViewHolder holder, int position) {
-		if (mCursor.moveToPosition(position + 1)) {
+		if (mCursor.moveToPosition(position)) {
 			if (position == 0) {
 				holder.itemView.setPadding(
 						0,
@@ -110,7 +110,7 @@ public class PostImagesRecyclerViewAdapter extends RecyclerView.Adapter<PostImag
 
 	@Override
 	public int getItemCount() {
-		return mCursor == null ? 0 : (mCursor.getCount() - 1);
+		return mCursor == null ? 0 : mCursor.getCount();
 	}
 
 	public class ViewHolder extends RecyclerView.ViewHolder {

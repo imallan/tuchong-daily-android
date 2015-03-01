@@ -95,21 +95,21 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 		switch (loader.getId()) {
 			case LOADER_POST_IMAGES:
-				if (data.moveToPosition(0)) {
-					final String url = data.getString(data.getColumnIndex(Table.Image.COLUMN_URL_FULL));
-					Picasso.with(getActivity()).load(url)
-							.transform(new ImageUtils.LimitImageSizeTransformation(
-											ImageUtils.LimitImageSizeTransformation.QUALITY.QUALITY_1080P)
-							).fit().centerCrop()
-							.into(mImage);
-					final String cameraInfo = data.getString(data.getColumnIndex(Table.Image.COLUMN_CAMERA));
-					final String lensInfo = data.getString(data.getColumnIndex(Table.Image.COLUMN_LENS));
-					mImageContainer.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							ImageActivity.startActivity(getActivity(), url, cameraInfo, lensInfo, mImage);
+				boolean isImageSet = false;
+				for (int i = 0; i < data.getCount(); i++) {
+					if (data.moveToPosition(i)) {
+						final int width = data.getInt(data.getColumnIndex(Table.Image.COLUMN_WIDTH));
+						final int height = data.getInt(data.getColumnIndex(Table.Image.COLUMN_HEIGHT));
+						if (width < height) {
+							//portrait mode
+							setPosterImage(data, i);
+							isImageSet = true;
+							break;
 						}
-					});
+					}
+				}
+				if (!isImageSet) {
+					setPosterImage(data, 0);
 				}
 				mAdapter.swapCursor(data);
 				if (data.getCount() <= 1) {
@@ -124,6 +124,25 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 					mTitle.setText(title);
 				}
 				break;
+		}
+	}
+
+	private void setPosterImage(Cursor data, int position) {
+		if (data != null && data.moveToPosition(position)) {
+			final String url = data.getString(data.getColumnIndex(Table.Image.COLUMN_URL_FULL));
+			Picasso.with(getActivity()).load(url)
+					.transform(new ImageUtils.LimitImageSizeTransformation(
+									ImageUtils.LimitImageSizeTransformation.QUALITY.QUALITY_1080P)
+					).fit().centerCrop()
+					.into(mImage);
+			final String cameraInfo = data.getString(data.getColumnIndex(Table.Image.COLUMN_CAMERA));
+			final String lensInfo = data.getString(data.getColumnIndex(Table.Image.COLUMN_LENS));
+			mImageContainer.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					ImageActivity.startActivity(getActivity(), url, cameraInfo, lensInfo, mImage);
+				}
+			});
 		}
 	}
 
