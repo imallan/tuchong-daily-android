@@ -1,5 +1,6 @@
 package uk.co.imallan.tuchongdaily.ui.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
@@ -11,9 +12,11 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 import uk.co.imallan.tuchongdaily.R;
 import uk.co.imallan.tuchongdaily.db.Table;
-import uk.co.imallan.tuchongdaily.ui.activity.ImageActivity;
+import uk.co.imallan.tuchongdaily.ui.activity.ImagePagerActivity;
 import uk.co.imallan.tuchongdaily.utils.ImageUtils;
 
 /**
@@ -27,6 +30,8 @@ public class PostImagesRecyclerViewAdapter extends RecyclerView.Adapter<PostImag
 
 	private long mLastClick = 0;
 
+	private ArrayList<String> mIds;
+
 	public PostImagesRecyclerViewAdapter(Context context) {
 		this.mContext = context;
 	}
@@ -34,8 +39,19 @@ public class PostImagesRecyclerViewAdapter extends RecyclerView.Adapter<PostImag
 	public Cursor swapCursor(Cursor cursor) {
 		Cursor oldCursor = mCursor;
 		mCursor = cursor;
+		updateServerIds();
 		notifyDataSetChanged();
 		return oldCursor;
+	}
+
+	private void updateServerIds() {
+		ArrayList<String> ids = new ArrayList<>();
+		for (int i = 0; i < mCursor.getCount(); i++) {
+			if (mCursor.moveToPosition(i)) {
+				ids.add(mCursor.getString(mCursor.getColumnIndex(Table.Image.COLUMN_ID)));
+			}
+		}
+		this.mIds = ids;
 	}
 
 	@Override
@@ -43,18 +59,11 @@ public class PostImagesRecyclerViewAdapter extends RecyclerView.Adapter<PostImag
 		LayoutInflater inflater = LayoutInflater.from(mContext);
 		View itemView = inflater.inflate(R.layout.view_item_post_image, parent, false);
 		final ViewHolder viewHolder = new ViewHolder(itemView);
-//		viewHolder.image.post(new Runnable() {
-//			@Override
-//			public void run() {
-//				viewHolder.image.getLayoutParams().width = viewHolder.image.getHeight();
-//				viewHolder.image.requestLayout();
-//			}
-//		});
 		return viewHolder;
 	}
 
 	@Override
-	public void onBindViewHolder(final ViewHolder holder, int position) {
+	public void onBindViewHolder(final ViewHolder holder, final int position) {
 		if (mCursor.moveToPosition(position)) {
 			if (position == 0) {
 				holder.itemView.setPadding(
@@ -86,10 +95,7 @@ public class PostImagesRecyclerViewAdapter extends RecyclerView.Adapter<PostImag
 					}
 				});
 			}
-//			final String imageURL = mCursor.getString(mCursor.getColumnIndex(Table.Image.COLUMN_URL_MEDIUM));
 			final String largeImageURL = mCursor.getString(mCursor.getColumnIndex(Table.Image.COLUMN_URL_LARGE));
-			final String cameraInfo = mCursor.getString(mCursor.getColumnIndex(Table.Image.COLUMN_CAMERA));
-			final String lensInfo = mCursor.getString(mCursor.getColumnIndex(Table.Image.COLUMN_LENS));
 			Picasso.with(mContext)
 					.load(largeImageURL)
 					.transform(new ImageUtils.LimitImageSizeTransformation(ImageUtils.LimitImageSizeTransformation.QUALITY.QUALITY_THUMBNAILS_TINY))
@@ -102,7 +108,7 @@ public class PostImagesRecyclerViewAdapter extends RecyclerView.Adapter<PostImag
 						return;
 					}
 					mLastClick = current;
-					ImageActivity.startActivity(mContext, largeImageURL, cameraInfo, lensInfo, holder.image);
+					ImagePagerActivity.startActivity((Activity) mContext, mIds, position, holder.image);
 				}
 			});
 		}
@@ -120,6 +126,10 @@ public class PostImagesRecyclerViewAdapter extends RecyclerView.Adapter<PostImag
 		public ViewHolder(View itemView) {
 			super(itemView);
 			image = (ImageView) itemView.findViewById(R.id.image_post_image);
+		}
+
+		public ImageView getImage() {
+			return image;
 		}
 	}
 }

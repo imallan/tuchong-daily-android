@@ -41,9 +41,9 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 
 	private ImageView mImage;
 
-	private RecyclerView mRecyclerView;
+	public RecyclerView mRecyclerView;
 
-	private PostImagesRecyclerViewAdapter mAdapter;
+	public PostImagesRecyclerViewAdapter mAdapter;
 
 	private View mImageContainer;
 

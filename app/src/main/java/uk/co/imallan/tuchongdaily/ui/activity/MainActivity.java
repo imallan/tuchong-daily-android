@@ -1,18 +1,29 @@
 package uk.co.imallan.tuchongdaily.ui.activity;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.SharedElementCallback;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Toast;
+
+import java.util.List;
+import java.util.Map;
 
 import uk.co.imallan.tuchongdaily.R;
 import uk.co.imallan.tuchongdaily.provider.PostProvider;
 import uk.co.imallan.tuchongdaily.service.PostsService;
 import uk.co.imallan.tuchongdaily.service.ServiceReceiver;
+import uk.co.imallan.tuchongdaily.ui.adapter.PostImagesRecyclerViewAdapter;
 import uk.co.imallan.tuchongdaily.ui.adapter.PostPagerAdapter;
 import uk.co.imallan.tuchongdaily.ui.fragment.PostFragment;
 
@@ -28,11 +39,16 @@ public class MainActivity extends AbstractActivity
 
 	private long mLastBackClicked = 0;
 
+	private int mImagePosition = 0;
+
+	private boolean isReenterTransition = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initElements();
+		initTransitions();
 		PostsService.requestPosts(this, serviceReceiver, 12, 0);
 		getSupportLoaderManager().initLoader(LOADER_POSTS, null, this);
 	}
@@ -43,6 +59,32 @@ public class MainActivity extends AbstractActivity
 		mPager.setAdapter(mAdapter);
 		mPager.setOnPageChangeListener(this);
 	}
+
+	private void initTransitions() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			setExitSharedElementCallback(new SharedElementCallback() {
+				@SuppressLint("NewApi")
+				@Override
+				public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+					super.onMapSharedElements(names, sharedElements);
+					if (!isReenterTransition) {
+						return;
+					}
+					isReenterTransition = false;
+					names.clear();
+					sharedElements.clear();
+					final PostFragment postFragment = (PostFragment) mAdapter.getRegisteredFragment(mPager.getCurrentItem());
+					final RecyclerView recyclerView = postFragment.mRecyclerView;
+					View sharedView =
+							((PostImagesRecyclerViewAdapter.ViewHolder) recyclerView.findViewHolderForPosition(mImagePosition)).getImage();
+					names.add(sharedView.getTransitionName());
+					sharedElements.put(sharedView.getTransitionName(), sharedView);
+				}
+			});
+		}
+
+	}
+
 
 	@Override
 	boolean prepareServiceReceiver() {
@@ -123,5 +165,29 @@ public class MainActivity extends AbstractActivity
 	@Override
 	public void onPageScrollStateChanged(int state) {
 
+	}
+
+	@Override
+	public void onActivityReenter(int resultCode, Intent data) {
+		super.onActivityReenter(resultCode, data);
+		if (resultCode == Activity.RESULT_OK) {
+			isReenterTransition = true;
+			mImagePosition = data.getIntExtra(ImagePagerActivity.EXTRA_IMAGE_POSITION, 0);
+			final PostFragment postFragment = (PostFragment) mAdapter.getRegisteredFragment(mPager.getCurrentItem());
+			postFragment.mRecyclerView.scrollToPosition(mImagePosition);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+				postponeEnterTransition();
+				postFragment.mRecyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+					@SuppressLint("NewApi")
+					@Override
+					public boolean onPreDraw() {
+						postFragment.mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+						postFragment.mRecyclerView.requestLayout();
+						startPostponedEnterTransition();
+						return true;
+					}
+				});
+			}
+		}
 	}
 }
