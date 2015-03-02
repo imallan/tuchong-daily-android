@@ -20,7 +20,6 @@ import uk.co.imallan.tuchongdaily.R;
 import uk.co.imallan.tuchongdaily.db.Table;
 import uk.co.imallan.tuchongdaily.provider.ImageProvider;
 import uk.co.imallan.tuchongdaily.provider.PostProvider;
-import uk.co.imallan.tuchongdaily.ui.activity.ImageActivity;
 import uk.co.imallan.tuchongdaily.ui.adapter.PostImagesRecyclerViewAdapter;
 import uk.co.imallan.tuchongdaily.utils.ImageUtils;
 
@@ -112,11 +111,6 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 					setPosterImage(data, 0);
 				}
 				mAdapter.swapCursor(data);
-				if (data.getCount() <= 1) {
-					mRecyclerView.setVisibility(View.INVISIBLE);
-				} else {
-					mRecyclerView.setVisibility(View.VISIBLE);
-				}
 				break;
 			case LOADER_POST:
 				if (data.moveToPosition(0)) {
@@ -137,12 +131,6 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 					.into(mImage);
 			final String cameraInfo = data.getString(data.getColumnIndex(Table.Image.COLUMN_CAMERA));
 			final String lensInfo = data.getString(data.getColumnIndex(Table.Image.COLUMN_LENS));
-			mImageContainer.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					ImageActivity.startActivity(getActivity(), url, cameraInfo, lensInfo, mImage);
-				}
-			});
 		}
 	}
 
@@ -152,11 +140,11 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 	}
 
 	public void onPageScrollFrom(float positionOffset, int positionOffsetPixels) {
-		mImage.setTranslationX(positionOffsetPixels / 2);
+		mImage.setTranslationX(positionOffsetPixels / 1.2f);
 	}
 
 	public void onPageScrollto(float positionOffset, int positionOffsetPixels) {
-		mImage.setTranslationX((positionOffsetPixels - mImage.getWidth()) / 2);
+		mImage.setTranslationX((positionOffsetPixels - mImage.getWidth()) / 1.2f);
 	}
 
 	public void onPageSelected() {

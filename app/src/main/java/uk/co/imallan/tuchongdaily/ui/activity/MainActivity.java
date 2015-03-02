@@ -3,8 +3,13 @@ package uk.co.imallan.tuchongdaily.ui.activity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.SharedElementCallback;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -29,7 +34,8 @@ import uk.co.imallan.tuchongdaily.ui.fragment.PostFragment;
 
 
 public class MainActivity extends AbstractActivity
-		implements LoaderManager.LoaderCallbacks<Cursor>, ViewPager.OnPageChangeListener {
+		implements LoaderManager.LoaderCallbacks<Cursor>, ViewPager.OnPageChangeListener,
+		SensorEventListener {
 
 	private static final int LOADER_POSTS = 1;
 
@@ -43,14 +49,41 @@ public class MainActivity extends AbstractActivity
 
 	private boolean isReenterTransition = false;
 
+	private Sensor mAccelerometer;
+
+	private SensorManager mSensorManager;
+
+	private float gravityX = 0;
+
+	private static float GRAVITY_FILTER_K = 0.9f;
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initElements();
 		initTransitions();
-		PostsService.requestPosts(this, serviceReceiver, 12, 0);
+		initSensors();
+		PostsService.requestPosts(this, serviceReceiver, 20, 0);
 		getSupportLoaderManager().initLoader(LOADER_POSTS, null, this);
+	}
+
+	private void initSensors() {
+		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		mSensorManager.unregisterListener(this);
 	}
 
 	private void initElements() {
@@ -189,5 +222,23 @@ public class MainActivity extends AbstractActivity
 				});
 			}
 		}
+	}
+
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		switch (event.sensor.getType()) {
+			case Sensor.TYPE_ACCELEROMETER:
+				final float x = event.values[0];
+				gravityX = GRAVITY_FILTER_K * gravityX + (1 - GRAVITY_FILTER_K) * x;
+				PostFragment fragment = getRegisteredFragment(mPager.getCurrentItem());
+				if (fragment != null) {
+					fragment.mRecyclerView.scrollBy((int) x, 0);
+				}
+		}
+	}
+
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
 	}
 }

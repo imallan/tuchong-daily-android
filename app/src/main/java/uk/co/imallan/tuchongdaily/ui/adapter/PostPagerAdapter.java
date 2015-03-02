@@ -42,6 +42,11 @@ public class PostPagerAdapter extends AbstractPagerAdapter {
 	}
 
 	@Override
+	public int getItemPosition(Object object) {
+		return POSITION_NONE;
+	}
+
+	@Override
 	public int getCount() {
 		return mCursor == null ? 0 : mCursor.getCount();
 	}
