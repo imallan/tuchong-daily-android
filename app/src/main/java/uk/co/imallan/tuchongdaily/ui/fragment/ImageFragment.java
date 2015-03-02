@@ -22,7 +22,7 @@ import uk.co.imallan.tuchongdaily.provider.ImageProvider;
 /**
  * Created by allan on 15/3/1.
  */
-public class ImageFragment extends AbstractFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class ImageFragment extends AbstractFragment implements LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener {
 
 	public static final String IMAGE_SERVER_ID = "IMAGE_SERVER_ID";
 
@@ -61,6 +61,7 @@ public class ImageFragment extends AbstractFragment implements LoaderManager.Loa
 	@Override
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		mImage.setOnClickListener(this);
 		getLoaderManager().initLoader(LOADER_REQUEST_IMAGE, null, this);
 
 	}
@@ -107,5 +108,14 @@ public class ImageFragment extends AbstractFragment implements LoaderManager.Loa
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
 
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+			case R.id.image_view_image_framgent:
+				getActivity().onBackPressed();
+				break;
+		}
 	}
 }
