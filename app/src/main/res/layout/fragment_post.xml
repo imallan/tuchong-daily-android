@@ -10,7 +10,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 
-	<ImageView
+		<ImageView
 			android:id="@+id/image_post"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
@@ -24,7 +24,11 @@
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/post_images_pager_height"
 		android:layout_alignParentBottom="true"
-		android:elevation="@dimen/space_large"/>
+		android:paddingLeft="@dimen/space_extra_small"
+		android:paddingRight="@dimen/space_extra_small"
+		android:clipToPadding="false"
+		android:elevation="@dimen/space_large"
+		android:overScrollMode="never"/>
 
 	<TextView
 		android:id="@+id/text_post_title"

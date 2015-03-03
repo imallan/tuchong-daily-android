@@ -230,8 +230,8 @@ public class MainActivity extends AbstractActivity
 				final float x = event.values[0];
 				gravityX = GRAVITY_FILTER_K * gravityX + (1 - GRAVITY_FILTER_K) * x;
 				PostFragment fragment = getRegisteredFragment(mPager.getCurrentItem());
-				if (fragment != null && Math.abs(x) >= 1) {
-					fragment.mRecyclerView.scrollBy(x > 1 ? 1 : -1, 0);
+				if (fragment != null) {
+					fragment.mRecyclerView.scrollBy((int) gravityX, 0);
 				}
 		}
 	}
