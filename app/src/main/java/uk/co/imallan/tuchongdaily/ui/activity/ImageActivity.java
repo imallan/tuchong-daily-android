@@ -21,7 +21,7 @@ import uk.co.imallan.tuchongdaily.R;
 /**
  * Created by allan on 15/2/27.
  */
-public class ImageActivity extends AbstractActivity {
+public class ImageActivity extends AbstractActivity implements View.OnClickListener {
 
 	private static final String EXTRA_IMAGE_URL = "EXTRA_IMAGE_URL";
 
@@ -34,6 +34,8 @@ public class ImageActivity extends AbstractActivity {
 	private TextView mCameraInfo;
 
 	private TextView mLensInfo;
+
+	private View mRootView;
 
 	public static void startActivity(Context context, String imageURL, String cameraInfo, String lensInfo, View sharedView) {
 		Intent intent = new Intent(context, ImageActivity.class);
@@ -64,9 +66,7 @@ public class ImageActivity extends AbstractActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_image);
 		initTransitions();
-		mImageView = (ImageView) findViewById(R.id.image_view_image);
-		mCameraInfo = (TextView) findViewById(R.id.text_image_camera_info);
-		mLensInfo = (TextView) findViewById(R.id.text_image_lens_info);
+		initElements();
 		String imageURL = getIntent().getStringExtra(EXTRA_IMAGE_URL);
 		String cameraInfoText = getIntent().getStringExtra(EXTRA_IMAGE_CAMERA_INFO);
 		String lensInfoText = getIntent().getStringExtra(EXTRA_IMAGE_LENS_INFO);
@@ -89,12 +89,16 @@ public class ImageActivity extends AbstractActivity {
 
 			}
 		});
-		mImageView.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				onBackPressed();
-			}
-		});
+	}
+
+	private void initElements() {
+		mRootView = findViewById(R.id.root_view_activity_image);
+		mImageView = (ImageView) findViewById(R.id.image_view_image);
+		mCameraInfo = (TextView) findViewById(R.id.text_image_camera_info);
+		mLensInfo = (TextView) findViewById(R.id.text_image_lens_info);
+
+		mImageView.setOnClickListener(this);
+		mRootView.setOnClickListener(this);
 	}
 
 	private void initTransitions() {
@@ -112,4 +116,13 @@ public class ImageActivity extends AbstractActivity {
 		}
 	}
 
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+			case R.id.root_view_activity_image:
+			case R.id.image_view_image:
+				onBackPressed();
+				break;
+		}
+	}
 }

@@ -31,6 +31,8 @@ public class ImageFragment extends AbstractFragment implements LoaderManager.Loa
 
 	private static final int LOADER_REQUEST_IMAGE = 1;
 
+	private View mRootView;
+
 	public ImageView mImage;
 
 	private String mServerId;
@@ -53,12 +55,12 @@ public class ImageFragment extends AbstractFragment implements LoaderManager.Loa
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_image, container, false);
-		mImage = (ImageView) rootView.findViewById(R.id.image_view_image_framgent);
-		mCamera = (TextView) rootView.findViewById(R.id.text_image_fragment_camera_info);
-		mLens = (TextView) rootView.findViewById(R.id.text_image_fragment_lens_info);
+		mRootView = inflater.inflate(R.layout.fragment_image, container, false);
+		mImage = (ImageView) mRootView.findViewById(R.id.image_view_image_framgent);
+		mCamera = (TextView) mRootView.findViewById(R.id.text_image_fragment_camera_info);
+		mLens = (TextView) mRootView.findViewById(R.id.text_image_fragment_lens_info);
 		initTransitions();
-		return rootView;
+		return mRootView;
 	}
 
 	private void initTransitions() {
@@ -78,6 +80,7 @@ public class ImageFragment extends AbstractFragment implements LoaderManager.Loa
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		mImage.setOnClickListener(this);
+		mRootView.setOnClickListener(this);
 		getLoaderManager().initLoader(LOADER_REQUEST_IMAGE, null, this);
 
 	}
@@ -137,6 +140,7 @@ public class ImageFragment extends AbstractFragment implements LoaderManager.Loa
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+			case R.id.root_view_fragment_image:
 			case R.id.image_view_image_framgent:
 				getActivity().onBackPressed();
 				break;
