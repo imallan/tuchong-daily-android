@@ -7,9 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.internal.VersionUtils;
 import android.text.TextUtils;
-import android.transition.Fade;
 import android.transition.Slide;
 import android.view.View;
 import android.widget.ImageView;
@@ -106,10 +104,10 @@ public class ImageActivity extends AbstractActivity {
 			slideInBottom.addTarget(R.id.text_image_lens_info);
 			slideInBottom.setStartDelay(300);
 			getWindow().setEnterTransition(slideInBottom);
-			Fade fade = new Fade();
-			fade.addTarget(R.id.text_image_camera_info);
-			fade.addTarget(R.id.text_image_lens_info);
-			getWindow().setReturnTransition(fade);
+			Slide slide = new Slide();
+			slide.addTarget(R.id.text_image_camera_info);
+			slide.addTarget(R.id.text_image_lens_info);
+			getWindow().setReturnTransition(slide);
 			postponeEnterTransition();
 		}
 	}

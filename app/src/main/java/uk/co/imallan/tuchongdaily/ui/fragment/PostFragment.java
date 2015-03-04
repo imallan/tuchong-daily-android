@@ -2,6 +2,7 @@ package uk.co.imallan.tuchongdaily.ui.fragment;
 
 import android.animation.ValueAnimator;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
@@ -10,6 +11,7 @@ import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.transition.Fade;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,7 +87,18 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 		mImage = (ImageView) mRootView.findViewById(R.id.image_post);
 		mPostInfoContainer = mRootView.findViewById(R.id.container_post_info);
 		mGalleryButton = mRootView.findViewById(R.id.button_show_gallery);
+		initTransitions();
 		return mRootView;
+	}
+
+	private void initTransitions() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			Fade fadeExit = new Fade();
+			fadeExit.addTarget(R.id.text_post_title);
+			fadeExit.addTarget(R.id.button_show_gallery);
+			fadeExit.addTarget(R.id.recycler_post_images);
+			getActivity().getWindow().setExitTransition(fadeExit);
+		}
 	}
 
 	@Override

@@ -7,10 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.text.TextUtils;
+import android.transition.Slide;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -32,6 +35,10 @@ public class ImageFragment extends AbstractFragment implements LoaderManager.Loa
 
 	private String mServerId;
 
+	private TextView mCamera;
+
+	private TextView mLens;
+
 	@Override
 	protected boolean prepareServiceReceiver() {
 		return false;
@@ -48,13 +55,22 @@ public class ImageFragment extends AbstractFragment implements LoaderManager.Loa
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_image, container, false);
 		mImage = (ImageView) rootView.findViewById(R.id.image_view_image_framgent);
+		mCamera = (TextView) rootView.findViewById(R.id.text_image_fragment_camera_info);
+		mLens = (TextView) rootView.findViewById(R.id.text_image_fragment_lens_info);
 		initTransitions();
 		return rootView;
 	}
 
 	private void initTransitions() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			//pass
+			Slide slideInBottom = new Slide();
+			slideInBottom.addTarget(R.id.text_image_fragment_camera_info);
+			slideInBottom.addTarget(R.id.text_image_fragment_lens_info);
+			slideInBottom.setStartDelay(300);
+			getActivity().getWindow().setEnterTransition(slideInBottom);
+			Slide slide = new Slide();
+			slide.addTarget(R.id.text_image_fragment_camera_info);
+			slide.addTarget(R.id.text_image_fragment_lens_info);
 		}
 	}
 
@@ -94,6 +110,14 @@ public class ImageFragment extends AbstractFragment implements LoaderManager.Loa
 							startPostponedEnterTransition();
 						}
 					});
+					String camera = data.getString(data.getColumnIndex(Table.Image.COLUMN_CAMERA));
+					String lens = data.getString(data.getColumnIndex(Table.Image.COLUMN_LENS));
+					if (!TextUtils.isEmpty(camera)) {
+						mCamera.setText(camera);
+					}
+					if (!TextUtils.isEmpty(lens)) {
+						mLens.setText(lens);
+					}
 					break;
 				}
 		}
