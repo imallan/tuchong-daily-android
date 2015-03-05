@@ -16,9 +16,12 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.util.List;
 import java.util.Map;
 
+import io.fabric.sdk.android.Fabric;
 import uk.co.imallan.tuchongdaily.R;
 import uk.co.imallan.tuchongdaily.provider.PostProvider;
 import uk.co.imallan.tuchongdaily.service.PostsService;
@@ -46,6 +49,7 @@ public class MainActivity extends AbstractActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Fabric.with(this, new Crashlytics());
 		setContentView(R.layout.activity_main);
 		initElements();
 		initTransitions();

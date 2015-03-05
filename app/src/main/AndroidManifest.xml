@@ -41,6 +41,10 @@
 			android:name=".provider.ImageProvider"
 			android:authorities="uk.co.imallan.tuchongdaily.provider.ImageProvider"
 			android:exported="false"/>
+
+		<meta-data
+			android:name="com.crashlytics.ApiKey"
+			android:value="3eb319d6f1f1dbc0fab2513aaad46205c4ddd05c"/>
 	</application>
 
 </manifest>
