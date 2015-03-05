@@ -13,6 +13,14 @@
 		android:animateLayoutChanges="true"
 		android:scaleType="centerCrop"/>
 
+
+	<View
+		android:id="@+id/bottom_shadow_post"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/post_images_pager_shadow_height"
+		android:layout_alignParentBottom="true"
+		android:background="@drawable/bottom_shadow"/>
+
 	<RelativeLayout
 		android:id="@+id/container_post_info"
 		android:layout_width="match_parent"
@@ -21,35 +29,53 @@
 		android:orientation="vertical"
 		android:translationY="@dimen/post_images_pager_height">
 
-
-		<TextView
-			android:id="@+id/text_post_title"
-			style="@style/TextAppearance.AppCompat.Medium.Inverse"
+		<LinearLayout
+			android:id="@+id/view_post_info"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:ellipsize="end"
-			android:fontFamily="sans-serif-light"
-			android:maxLines="1"
-			android:padding="@dimen/space_large"
-			android:textColor="@android:color/white"
-			tools:text="Title"/>
+			android:orientation="horizontal">
 
-		<ImageButton
-			android:id="@+id/button_show_gallery"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_alignParentEnd="true"
-			android:background="?android:attr/selectableItemBackground"
-			android:padding="@dimen/space_large"
-			android:src="@drawable/ic_image_filter_white_24dp"
-			android:visibility="gone"
-			tools:showIn="@layout/fragment_post"/>
+			<uk.co.imallan.tuchongdaily.ui.view.CircularImageView
+				android:id="@+id/image_post_author"
+				android:layout_width="@dimen/size_circular_image_small"
+				android:layout_height="@dimen/size_circular_image_small"
+				android:layout_gravity="center"
+				android:layout_marginLeft="@dimen/space_large"
+				android:elevation="@dimen/space_medium"
+				tools:src="@color/white"/>
+
+			<TextView
+				android:id="@+id/text_post_title"
+				style="@style/TextAppearance.AppCompat.Medium.Inverse"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginEnd="@dimen/space_largeX2"
+				android:layout_toEndOf="@id/image_post_author"
+				android:ellipsize="end"
+				android:fontFamily="sans-serif-light"
+				android:maxLines="1"
+				android:padding="@dimen/space_large"
+				android:textColor="@android:color/white"
+				tools:text="Title"/>
+
+			<ImageButton
+				android:id="@+id/button_show_gallery"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentEnd="true"
+				android:layout_gravity="center"
+				android:background="?android:attr/selectableItemBackground"
+				android:padding="@dimen/space_large"
+				android:src="@drawable/ic_image_filter_white_24dp"
+				android:visibility="gone"
+				tools:showIn="@layout/fragment_post"/>
+		</LinearLayout>
 
 		<android.support.v7.widget.RecyclerView
 			android:id="@+id/recycler_post_images"
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/post_images_pager_height"
-			android:layout_below="@id/text_post_title"
+			android:layout_below="@id/view_post_info"
 			android:clipToPadding="false"
 			android:elevation="@dimen/space_large"
 			android:overScrollMode="never"

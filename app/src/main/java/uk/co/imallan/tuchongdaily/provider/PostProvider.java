@@ -14,9 +14,9 @@ public class PostProvider extends AbstractProvider {
 
 	private static final String TABLE_NAME = Table.Post.TABLE_NAME;
 
-	private static final int URI_PRODUCTS = 1;
+	private static final int URI_POSTS = 1;
 
-	private static final int URI_PRODUCT_ID = 2;
+	private static final int URI_POST_ID = 2;
 
 
 	protected static Uri getContentUri() {
@@ -35,8 +35,8 @@ public class PostProvider extends AbstractProvider {
 	public boolean onCreate() {
 		boolean result = super.onCreate();
 		final String authority = getAuthority(this.getClass());
-		uriMatcher.addURI(authority, TABLE_NAME, URI_PRODUCTS);
-		uriMatcher.addURI(authority, TABLE_NAME + "/#", URI_PRODUCT_ID);
+		uriMatcher.addURI(authority, TABLE_NAME, URI_POSTS);
+		uriMatcher.addURI(authority, TABLE_NAME + "/#", URI_POST_ID);
 		return result;
 	}
 
@@ -45,14 +45,14 @@ public class PostProvider extends AbstractProvider {
 		Cursor c = null;
 		final SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 		switch (uriMatcher.match(uri)) {
-			case URI_PRODUCTS:
+			case URI_POSTS:
 				qb.setTables(TABLE_NAME
 								+ " JOIN " + Table.Author.TABLE_NAME +
 								" ON " + Table.Author.COLUMN_ID + "=" + Table.Post.COLUMN_AUTHOR_ID
 				);
 				c = qb.query(getReadableDatabase(), projection, selection, selectionArgs, null, null, sortOrder);
 				break;
-			case URI_PRODUCT_ID:
+			case URI_POST_ID:
 				qb.setTables(TABLE_NAME
 								+ " JOIN " + Table.Author.TABLE_NAME +
 								" ON " + Table.Author.COLUMN_ID + "=" + Table.Post.COLUMN_AUTHOR_ID
@@ -67,9 +67,9 @@ public class PostProvider extends AbstractProvider {
 	@Override
 	public String getType(Uri uri) {
 		switch (uriMatcher.match(uri)) {
-			case URI_PRODUCTS:
+			case URI_POSTS:
 				return TYPE_LIST_BASE + TABLE_NAME;
-			case URI_PRODUCT_ID:
+			case URI_POST_ID:
 				return TYPE_ITEM_BASE + TABLE_NAME;
 			default:
 				throw new IllegalArgumentException("Unsupported URI: " + uri);
@@ -79,10 +79,10 @@ public class PostProvider extends AbstractProvider {
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
 		switch (uriMatcher.match(uri)) {
-			case URI_PRODUCTS:
+			case URI_POSTS:
 				getWritableDatabase().insert(TABLE_NAME, null, values);
 				break;
-			case URI_PRODUCT_ID:
+			case URI_POST_ID:
 				getWritableDatabase().insert(TABLE_NAME, null, values);
 				break;
 		}
@@ -93,10 +93,10 @@ public class PostProvider extends AbstractProvider {
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
 		int deleted = 0;
 		switch (uriMatcher.match(uri)) {
-			case URI_PRODUCTS:
+			case URI_POSTS:
 				deleted = getWritableDatabase().delete(TABLE_NAME, null, null);
 				break;
-			case URI_PRODUCT_ID:
+			case URI_POST_ID:
 				deleted = getWritableDatabase().delete(TABLE_NAME, Table.Post.COLUMN_ID + "=?", new String[]{uri.getLastPathSegment()});
 				break;
 		}

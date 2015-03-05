@@ -11,7 +11,13 @@
 	<dimen name="space_small">4dp</dimen>
 	<dimen name="space_extra_small">2dp</dimen>
 
+	<!--view-->
+	<dimen name="size_circular_image_small">40dp</dimen>
+	<dimen name="action_bar_shadow_height">120dp</dimen>
+
 	<!--post-->
 	<dimen name="post_images_pager_height">120dp</dimen>
+	<dimen name="post_images_pager_shadow_height">180dp</dimen>
+	<dimen name="status_bar_size">24dp</dimen>
 
 </resources>

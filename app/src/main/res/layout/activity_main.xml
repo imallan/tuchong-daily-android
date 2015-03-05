@@ -9,4 +9,11 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"/>
 
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/action_bar_shadow_height"
+		android:background="@drawable/top_shadow"/>
+
+	<include layout="@layout/toolbar_transparent"/>
+
 </RelativeLayout>

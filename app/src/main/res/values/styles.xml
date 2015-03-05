@@ -22,4 +22,9 @@
 		<item name="android:windowTranslucentStatus">true</item>
 	</style>
 
+	<style name="ActionBarStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+		<item name="colorControlActivated">@color/white</item>
+		<item name="android:textCursorDrawable">@null</item>
+	</style>
+
 </resources>

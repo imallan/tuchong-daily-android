@@ -12,6 +12,9 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
+import android.transition.Fade;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Toast;
@@ -53,11 +56,14 @@ public class MainActivity extends AbstractActivity
 		setContentView(R.layout.activity_main);
 		initElements();
 		initTransitions();
+		setTitle(R.string.app_name);
 		PostsService.requestPosts(this, serviceReceiver, 20, 0);
 		getSupportLoaderManager().initLoader(LOADER_POSTS, null, this);
 	}
 
 	private void initElements() {
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
 		mPager = (ViewPager) findViewById(R.id.pager_main);
 		mAdapter = new PostPagerAdapter(getSupportFragmentManager());
 		mPager.setAdapter(mAdapter);
@@ -85,6 +91,23 @@ public class MainActivity extends AbstractActivity
 					sharedElements.put(sharedView.getTransitionName(), sharedView);
 				}
 			});
+
+			Fade fadeExit = new Fade();
+			fadeExit.addTarget(R.id.text_post_title);
+			fadeExit.addTarget(R.id.button_show_gallery);
+			fadeExit.addTarget(R.id.recycler_post_images);
+			fadeExit.addTarget(R.id.image_post_author);
+			fadeExit.addTarget(R.id.bottom_shadow_post);
+			fadeExit.addTarget(R.id.toolbar);
+			getWindow().setExitTransition(fadeExit);
+			Explode reenterExplode = new Explode();
+			reenterExplode.addTarget(R.id.text_post_title);
+			reenterExplode.addTarget(R.id.button_show_gallery);
+			reenterExplode.addTarget(R.id.recycler_post_images);
+			reenterExplode.addTarget(R.id.image_post_author);
+			reenterExplode.addTarget(R.id.bottom_shadow_post);
+			reenterExplode.addTarget(R.id.toolbar);
+			getWindow().setReenterTransition(reenterExplode);
 		}
 
 	}
