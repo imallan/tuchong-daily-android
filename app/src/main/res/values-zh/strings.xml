@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">图虫日报</string>
+	<string name="action_settings">设置</string>
+	<string name="double_click_to_exit">双击返回退出</string>
+</resources>
