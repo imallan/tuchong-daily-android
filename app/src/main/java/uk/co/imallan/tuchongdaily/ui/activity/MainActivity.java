@@ -13,7 +13,6 @@ import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.transition.Explode;
 import android.transition.Fade;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -100,14 +99,6 @@ public class MainActivity extends AbstractActivity
 			fadeExit.addTarget(R.id.bottom_shadow_post);
 			fadeExit.addTarget(R.id.toolbar);
 			getWindow().setExitTransition(fadeExit);
-			Explode reenterExplode = new Explode();
-			reenterExplode.addTarget(R.id.text_post_title);
-			reenterExplode.addTarget(R.id.button_show_gallery);
-			reenterExplode.addTarget(R.id.recycler_post_images);
-			reenterExplode.addTarget(R.id.image_post_author);
-			reenterExplode.addTarget(R.id.bottom_shadow_post);
-			reenterExplode.addTarget(R.id.toolbar);
-			getWindow().setReenterTransition(reenterExplode);
 		}
 
 	}
