@@ -14,6 +14,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ProgressBar;
@@ -71,6 +74,26 @@ public class MainActivity extends AbstractActivity
 		mPager.setAdapter(mAdapter);
 		mPager.setOnPageChangeListener(this);
 		mProgressBar = (ProgressBar) findViewById(R.id.progress_bar_main);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.share, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.action_share:
+				PostFragment postFragment = getRegisteredFragment(mPager.getCurrentItem());
+				if (postFragment != null) {
+					postFragment.share();
+				}
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	private void initTransitions() {

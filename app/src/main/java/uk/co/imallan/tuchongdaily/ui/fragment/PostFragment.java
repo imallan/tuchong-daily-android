@@ -1,6 +1,7 @@
 package uk.co.imallan.tuchongdaily.ui.fragment;
 
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,7 +45,7 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 
 	private View mPostInfoContainer;
 
-	private TextView mTitle;
+	private TextView mTitleTextView;
 
 	private ImageView mImage;
 
@@ -59,6 +60,10 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 	private long mLastClickTimestamp = 0;
 
 	private boolean isSingleImagePost = false;
+
+	private String mTitleStr;
+
+	private String mPostShareURL;
 
 	private String mImageUrl;
 
@@ -89,7 +94,7 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 	}
 
 	private void initElements() {
-		mTitle = (TextView) mRootView.findViewById(R.id.text_post_title);
+		mTitleTextView = (TextView) mRootView.findViewById(R.id.text_post_title);
 		mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_post_images);
 		mImage = (ImageView) mRootView.findViewById(R.id.image_post);
 		mPostInfoContainer = mRootView.findViewById(R.id.container_post_info);
@@ -157,13 +162,14 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 				break;
 			case LOADER_POST:
 				if (data.moveToPosition(0)) {
-					String title = data.getString(data.getColumnIndex(Table.Post.COLUMN_TITLE));
-					mTitle.setText(title);
+					mTitleStr = data.getString(data.getColumnIndex(Table.Post.COLUMN_TITLE));
+					mTitleTextView.setText(mTitleStr);
 					Picasso.with(getActivity())
 							.load(data.getString(data.getColumnIndex(Table.Author.COLUMN_ICON)))
 							.fit()
 							.centerCrop()
 							.into(mAuthorImage);
+					mPostShareURL = data.getString(data.getColumnIndex(Table.Post.COLUMN_URL));
 				}
 				break;
 		}
@@ -248,4 +254,13 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 		}
 	}
 
+	public void share() {
+		if (!TextUtils.isEmpty(mPostShareURL)) {
+			Intent sendIntent = new Intent();
+			sendIntent.setAction(Intent.ACTION_SEND);
+			sendIntent.putExtra(Intent.EXTRA_TEXT, mTitleStr + " " + mPostShareURL);
+			sendIntent.setType("text/plain");
+			startActivity(Intent.createChooser(sendIntent, getResources().getString(R.string.action_share)));
+		}
+	}
 }
