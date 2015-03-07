@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -48,6 +49,8 @@ public class MainActivity extends AbstractActivity
 
 	private boolean isReenterTransition = false;
 
+	private ProgressBar mProgressBar;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,6 +70,7 @@ public class MainActivity extends AbstractActivity
 		mAdapter = new PostPagerAdapter(getSupportFragmentManager());
 		mPager.setAdapter(mAdapter);
 		mPager.setOnPageChangeListener(this);
+		mProgressBar = (ProgressBar) findViewById(R.id.progress_bar_main);
 	}
 
 	private void initTransitions() {
@@ -135,6 +139,9 @@ public class MainActivity extends AbstractActivity
 		switch (loader.getId()) {
 			case LOADER_POSTS:
 				mAdapter.swapCursor(data);
+				if (data.getCount() > 0) {
+					mProgressBar.setVisibility(View.GONE);
+				}
 				break;
 		}
 	}
