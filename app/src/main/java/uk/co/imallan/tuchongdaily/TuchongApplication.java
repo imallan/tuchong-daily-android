@@ -21,15 +21,13 @@ public class TuchongApplication extends Application {
 							.enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
 							.enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
 							.build());
+			setPicasso();
 		}
-		setPicasso();
 	}
 
 	public void setPicasso() {
 		OkHttpClient client = new OkHttpClient();
-		if (BuildConfig.DEBUG) {
-			client.networkInterceptors().add(new StethoInterceptor());
-		}
+		client.networkInterceptors().add(new StethoInterceptor());
 		Picasso picasso = new Picasso.Builder(this).downloader(new OkHttpDownloader(client)).build();
 		Picasso.setSingletonInstance(picasso);
 	}
