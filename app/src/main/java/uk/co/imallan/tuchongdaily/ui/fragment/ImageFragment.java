@@ -128,7 +128,9 @@ public class ImageFragment extends AbstractFragment implements LoaderManager.Loa
 
 	private void startPostponedEnterTransition() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			getActivity().startPostponedEnterTransition();
+			if (getActivity() != null) {
+				getActivity().startPostponedEnterTransition();
+			}
 		}
 	}
 
