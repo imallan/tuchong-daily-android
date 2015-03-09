@@ -82,17 +82,25 @@ public class MainActivity extends AbstractActivity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.share, menu);
+		inflater.inflate(R.menu.menu_share, menu);
+		inflater.inflate(R.menu.menu_browser, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		PostFragment postFragment;
 		switch (item.getItemId()) {
 			case R.id.action_share:
-				PostFragment postFragment = getRegisteredFragment(mPager.getCurrentItem());
+				postFragment = getRegisteredFragment(mPager.getCurrentItem());
 				if (postFragment != null) {
 					postFragment.share();
+				}
+				return true;
+			case R.id.action_open_in_browser:
+				postFragment = getRegisteredFragment(mPager.getCurrentItem());
+				if (postFragment != null) {
+					postFragment.openInBrowser();
 				}
 				return true;
 		}

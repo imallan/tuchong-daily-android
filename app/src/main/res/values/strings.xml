@@ -6,5 +6,6 @@
 	<string name="share_hero">hero</string>
 	<string name="double_click_to_exit">Double click to exit</string>
 	<string name="action_share">Share</string>
+	<string name="action_open_in_browser">Open In Browser</string>
 
 </resources>

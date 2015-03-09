@@ -2,8 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
 	  xmlns:app="http://schemas.android.com/apk/res-auto">
 	<item
-		android:id="@+id/action_share"
-		android:icon="@drawable/ic_share_variant_white_24dp"
-		android:title="@string/action_share"
+		android:id="@+id/action_open_in_browser"
+		android:icon="@drawable/ic_google_chrome_white_24dp"
+		android:orderInCategory="100"
+		android:title="@string/action_open_in_browser"
 		app:showAsAction="ifRoom"/>
 </menu>

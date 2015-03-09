@@ -4,4 +4,5 @@
 	<string name="action_settings">设置</string>
 	<string name="double_click_to_exit">双击返回退出</string>
 	<string name="action_share">分享</string>
+	<string name="action_open_in_browser">在浏览器中打开</string>
 </resources>

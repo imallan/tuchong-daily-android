@@ -3,6 +3,7 @@ package uk.co.imallan.tuchongdaily.ui.fragment;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -63,7 +64,7 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 
 	private String mTitleStr;
 
-	private String mPostShareURL;
+	private String mPostURL;
 
 	private String mImageUrl;
 
@@ -169,7 +170,7 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 							.fit()
 							.centerCrop()
 							.into(mAuthorImage);
-					mPostShareURL = data.getString(data.getColumnIndex(Table.Post.COLUMN_URL));
+					mPostURL = data.getString(data.getColumnIndex(Table.Post.COLUMN_URL));
 				}
 				break;
 		}
@@ -255,12 +256,21 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 	}
 
 	public void share() {
-		if (!TextUtils.isEmpty(mPostShareURL)) {
+		if (!TextUtils.isEmpty(mPostURL)) {
 			Intent sendIntent = new Intent();
 			sendIntent.setAction(Intent.ACTION_SEND);
-			sendIntent.putExtra(Intent.EXTRA_TEXT, mTitleStr + " " + mPostShareURL);
+			sendIntent.putExtra(Intent.EXTRA_TEXT, mTitleStr + " " + mPostURL);
 			sendIntent.setType("text/plain");
 			startActivity(Intent.createChooser(sendIntent, getResources().getString(R.string.action_share)));
 		}
 	}
+
+	public void openInBrowser() {
+		if (!TextUtils.isEmpty(mPostURL)) {
+			Intent intent = new Intent(Intent.ACTION_VIEW);
+			intent.setData(Uri.parse(mPostURL));
+			startActivity(intent);
+		}
+	}
+
 }
