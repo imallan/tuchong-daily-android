@@ -17,6 +17,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import uk.co.imallan.tuchongdaily.R;
+import uk.co.imallan.tuchongdaily.utils.ImageUtils;
 
 /**
  * Created by allan on 15/2/27.
@@ -76,19 +77,21 @@ public class ImageActivity extends AbstractActivity implements View.OnClickListe
 		if (!TextUtils.isEmpty(lensInfoText)) {
 			mLensInfo.setText(lensInfoText);
 		}
-		Picasso.with(this).load(imageURL).noPlaceholder().noFade().into(mImageView, new Callback() {
-			@Override
-			public void onSuccess() {
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-					startPostponedEnterTransition();
-				}
-			}
+		Picasso.with(this).load(imageURL).noPlaceholder().noFade()
+				.transform(new ImageUtils.LimitImageSizeTransformation(ImageUtils.LimitImageSizeTransformation.QUALITY.QUALITY_1080P))
+				.into(mImageView, new Callback() {
+					@Override
+					public void onSuccess() {
+						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+							startPostponedEnterTransition();
+						}
+					}
 
-			@Override
-			public void onError() {
+					@Override
+					public void onError() {
 
-			}
-		});
+					}
+				});
 	}
 
 	private void initElements() {

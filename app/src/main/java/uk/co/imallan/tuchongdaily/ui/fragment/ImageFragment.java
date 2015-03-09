@@ -21,6 +21,7 @@ import com.squareup.picasso.Picasso;
 import uk.co.imallan.tuchongdaily.R;
 import uk.co.imallan.tuchongdaily.db.Table;
 import uk.co.imallan.tuchongdaily.provider.ImageProvider;
+import uk.co.imallan.tuchongdaily.utils.ImageUtils;
 
 /**
  * Created by allan on 15/3/1.
@@ -102,6 +103,7 @@ public class ImageFragment extends AbstractFragment implements LoaderManager.Loa
 			case LOADER_REQUEST_IMAGE:
 				if (data.moveToFirst()) {
 					Picasso.with(getActivity()).load(data.getString(data.getColumnIndex(Table.Image.COLUMN_URL_LARGE)))
+							.transform(new ImageUtils.LimitImageSizeTransformation(ImageUtils.LimitImageSizeTransformation.QUALITY.QUALITY_1080P))
 							.noPlaceholder().noFade().into(mImage, new Callback() {
 						@Override
 						public void onSuccess() {

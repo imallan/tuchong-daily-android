@@ -98,7 +98,7 @@ public class PostImagesRecyclerViewAdapter extends RecyclerView.Adapter<PostImag
 			final String largeImageURL = mCursor.getString(mCursor.getColumnIndex(Table.Image.COLUMN_URL_LARGE));
 			Picasso.with(mContext)
 					.load(largeImageURL)
-					.transform(new ImageUtils.LimitImageSizeTransformation(ImageUtils.LimitImageSizeTransformation.QUALITY.QUALITY_THUMBNAILS_TINY))
+					.transform(new ImageUtils.LimitImageSizeTransformation(ImageUtils.LimitImageSizeTransformation.QUALITY.QUALITY_1080P))
 					.into(holder.image);
 			holder.itemView.setOnClickListener(new View.OnClickListener() {
 				@Override

@@ -2,6 +2,7 @@ package uk.co.imallan.tuchongdaily.ui.fragment;
 
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -25,7 +26,6 @@ import uk.co.imallan.tuchongdaily.R;
 import uk.co.imallan.tuchongdaily.db.Table;
 import uk.co.imallan.tuchongdaily.provider.ImageProvider;
 import uk.co.imallan.tuchongdaily.provider.PostProvider;
-import uk.co.imallan.tuchongdaily.ui.activity.ImageActivity;
 import uk.co.imallan.tuchongdaily.ui.adapter.PostImagesRecyclerViewAdapter;
 import uk.co.imallan.tuchongdaily.utils.ImageUtils;
 
@@ -152,13 +152,8 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 				if (!isImageSet) {
 					setPosterImage(data, 0);
 				}
-				if (data.getCount() == 1) {
-					mGalleryButton.setVisibility(View.GONE);
-					isSingleImagePost = true;
-				} else {
-					mGalleryButton.setVisibility(View.VISIBLE);
-					isSingleImagePost = false;
-				}
+				mGalleryButton.setVisibility(View.VISIBLE);
+				isSingleImagePost = false;
 				mAdapter.swapCursor(data);
 				break;
 			case LOADER_POST:
@@ -181,12 +176,22 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 			final String url = data.getString(data.getColumnIndex(Table.Image.COLUMN_URL_FULL));
 			this.mImageUrl = url;
 			Picasso.with(getActivity()).load(url)
-					.transform(new ImageUtils.LimitImageSizeTransformation(
-									ImageUtils.LimitImageSizeTransformation.QUALITY.QUALITY_1080P)
-					).fit().centerCrop()
+					.transform(new ImageUtils.LimitImageSizeTransformation(ImageUtils.LimitImageSizeTransformation.QUALITY.QUALITY_1440P))
+					.fit().centerCrop()
 					.into(mImage);
 			mCameraInfo = data.getString(data.getColumnIndex(Table.Image.COLUMN_CAMERA));
 			mLensInfo = data.getString(data.getColumnIndex(Table.Image.COLUMN_LENS));
+		}
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		if (!TextUtils.isEmpty(mImageUrl)) {
+			Picasso.with(getActivity()).load(mImageUrl)
+					.transform(new ImageUtils.LimitImageSizeTransformation(ImageUtils.LimitImageSizeTransformation.QUALITY.QUALITY_1440P))
+					.fit().centerCrop()
+					.into(mImage);
 		}
 	}
 
@@ -241,13 +246,7 @@ public class PostFragment extends AbstractFragment implements LoaderManager.Load
 		}
 		switch (v.getId()) {
 			case R.id.image_post:
-				if (isSingleImagePost) {
-					if (!TextUtils.isEmpty(mImageUrl)) {
-						ImageActivity.startActivity(getActivity(), mImageUrl, mCameraInfo, mLensInfo, mImage);
-					}
-				} else {
-					toggleGalleryRecyclerView();
-				}
+				toggleGalleryRecyclerView();
 				break;
 			case R.id.button_show_gallery:
 				toggleGalleryRecyclerView();
