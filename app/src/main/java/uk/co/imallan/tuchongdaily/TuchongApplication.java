@@ -49,7 +49,6 @@ public class TuchongApplication extends Application {
 		Picasso picasso = new Picasso.Builder(this)
 				.downloader(new OkHttpDownloader(client))
 				.build();
-		picasso.setIndicatorsEnabled(true);
 		Picasso.setSingletonInstance(picasso);
 	}
 
