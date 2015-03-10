@@ -4,14 +4,22 @@ import android.app.Application;
 
 import com.facebook.stetho.Stetho;
 import com.facebook.stetho.okhttp.StethoInterceptor;
+import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by allan on 15/3/8.
  */
 public class TuchongApplication extends Application {
+
+	private static final String PICASSO_CACHE = "picasso-cache";
+
+	private static final long PICASSO_CACHE_SIZE = 100 * 1024 * 1024;
 
 	public void onCreate() {
 		super.onCreate();
@@ -28,7 +36,20 @@ public class TuchongApplication extends Application {
 	public void setPicasso() {
 		OkHttpClient client = new OkHttpClient();
 		client.networkInterceptors().add(new StethoInterceptor());
-		Picasso picasso = new Picasso.Builder(this).downloader(new OkHttpDownloader(client)).build();
+		File cache = new File(this.getCacheDir(), PICASSO_CACHE);
+		if (!cache.exists()) {
+			//noinspection ResultOfMethodCallIgnored
+			cache.mkdirs();
+		}
+		try {
+			client.setCache(new Cache(cache, PICASSO_CACHE_SIZE));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Picasso picasso = new Picasso.Builder(this)
+				.downloader(new OkHttpDownloader(client))
+				.build();
+		picasso.setIndicatorsEnabled(true);
 		Picasso.setSingletonInstance(picasso);
 	}
 
