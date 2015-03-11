@@ -107,12 +107,12 @@ public class ImageFragment extends AbstractFragment implements LoaderManager.Loa
 							.noPlaceholder().noFade().into(mImage, new Callback() {
 						@Override
 						public void onSuccess() {
-							startPostponedEnterTransition();
+							scheduleStartPostponedTransition(mImage);
 						}
 
 						@Override
 						public void onError() {
-							startPostponedEnterTransition();
+							scheduleStartPostponedTransition(mImage);
 						}
 					});
 					String camera = data.getString(data.getColumnIndex(Table.Image.COLUMN_CAMERA));
@@ -125,14 +125,6 @@ public class ImageFragment extends AbstractFragment implements LoaderManager.Loa
 					}
 					break;
 				}
-		}
-	}
-
-	private void startPostponedEnterTransition() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			if (getActivity() != null) {
-				getActivity().startPostponedEnterTransition();
-			}
 		}
 	}
 

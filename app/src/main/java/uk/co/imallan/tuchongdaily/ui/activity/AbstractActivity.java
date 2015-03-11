@@ -1,9 +1,13 @@
 package uk.co.imallan.tuchongdaily.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.view.ViewTreeObserver;
 
 import uk.co.imallan.tuchongdaily.service.ServiceReceiver;
 
@@ -43,5 +47,20 @@ public abstract class AbstractActivity extends ActionBarActivity implements Serv
 	@Override
 	public void onReceiveResult(int resultCode, Bundle resultData, Intent originalIntent, Bundle originalBundle) {
 
+	}
+
+	public void scheduleStartPostponedTransition(final View sharedElement) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			sharedElement.getViewTreeObserver().addOnPreDrawListener(
+					new ViewTreeObserver.OnPreDrawListener() {
+						@SuppressLint("NewApi")
+						@Override
+						public boolean onPreDraw() {
+							sharedElement.getViewTreeObserver().removeOnPreDrawListener(this);
+							startPostponedEnterTransition();
+							return true;
+						}
+					});
+		}
 	}
 }
