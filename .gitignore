@@ -23,3 +23,6 @@ gen/
 
 # Mac
 .DS_Store
+
+# Signing
+*.keystore
